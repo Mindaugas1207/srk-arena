@@ -42,7 +42,7 @@ function endBlink() { //function to stop blinking
   LED.unexport(); // Unexport GPIO to free resources
 }
 
-setTimeout(endBlink, 10000); //stop blinking after 5 seconds
+//setTimeout(endBlink, 100000); //stop blinking after 5 seconds
 
 // pushButton.watch(function (err, value) { //Watch for hardware interrupts on pushButton GPIO, specify callback function
 //   if (err) { //if an error
