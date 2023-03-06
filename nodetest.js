@@ -3,7 +3,7 @@ var http = require('http');
 var url = require('url');
 var fs = require('fs');
 
-var LED = new Gpio(4, 'out'); //use GPIO pin 4, and specify that it is output
+var LED = new Gpio(27, 'out'); //use GPIO pin 4, and specify that it is output
 var blinkInterval = setInterval(blinkLED, 1000); //run the blinkLED function every 250ms
 
 //var pushButton = new Gpio(4, 'in', 'both'); //use GPIO pin 17 as input, and 'both' button presses, and releases should be handled
