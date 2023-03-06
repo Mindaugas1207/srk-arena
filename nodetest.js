@@ -2,10 +2,9 @@ var Gpio = require('onoff').Gpio; //include onoff to interact with the GPIO
 var http = require('http');
 var url = require('url');
 var fs = require('fs');
-
+var st = 0;
 var LED = new Gpio(27, 'out'); //use GPIO pin 4, and specify that it is output
 var blinkInterval = setInterval(blinkLED, 1000); //run the blinkLED function every 250ms
-
 //var pushButton = new Gpio(4, 'in', 'both'); //use GPIO pin 17 as input, and 'both' button presses, and releases should be handled
 
 // http.createServer(function (req, res) {
@@ -29,10 +28,12 @@ http.createServer(function (req, res) {
 
 
 function blinkLED() { //function to start blinking
-  if (LED.readSync() === 0) { //check the pin state, if the state is 0 (or off)
-    LED.writeSync(0); //set pin state to 1 (turn LED on)
+  if (st === 0) { //check the pin state, if the state is 0 (or off)
+    LED.writeSync(1); //set pin state to 1 (turn LED on)
+    st = 1;
   } else {
     LED.writeSync(0); //set pin state to 0 (turn LED off)
+    st = 0;
   }
 }
 
@@ -42,7 +43,7 @@ function endBlink() { //function to stop blinking
   LED.unexport(); // Unexport GPIO to free resources
 }
 
-//setTimeout(endBlink, 100000); //stop blinking after 5 seconds
+setTimeout(endBlink, 10000); //stop blinking after 5 seconds
 
 // pushButton.watch(function (err, value) { //Watch for hardware interrupts on pushButton GPIO, specify callback function
 //   if (err) { //if an error
