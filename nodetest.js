@@ -3,10 +3,10 @@ var http = require('http');
 var url = require('url');
 var fs = require('fs');
 
-//var LED = new Gpio(4, 'out'); //use GPIO pin 4, and specify that it is output
-//var blinkInterval = setInterval(blinkLED, 250); //run the blinkLED function every 250ms
+var LED = new Gpio(17, 'out'); //use GPIO pin 4, and specify that it is output
+var blinkInterval = setInterval(blinkLED, 500); //run the blinkLED function every 250ms
 
-//var pushButton = new Gpio(17, 'in', 'both'); //use GPIO pin 17 as input, and 'both' button presses, and releases should be handled
+//var pushButton = new Gpio(4, 'in', 'both'); //use GPIO pin 17 as input, and 'both' button presses, and releases should be handled
 
 // http.createServer(function (req, res) {
 //   res.writeHead(200, {'Content-Type': 'text/html'});
@@ -28,21 +28,21 @@ http.createServer(function (req, res) {
 }).listen(8080);
 
 
-// function blinkLED() { //function to start blinking
-//   if (LED.readSync() === 0) { //check the pin state, if the state is 0 (or off)
-//     LED.writeSync(1); //set pin state to 1 (turn LED on)
-//   } else {
-//     LED.writeSync(0); //set pin state to 0 (turn LED off)
-//   }
-// }
+function blinkLED() { //function to start blinking
+  if (LED.readSync() === 0) { //check the pin state, if the state is 0 (or off)
+    LED.writeSync(1); //set pin state to 1 (turn LED on)
+  } else {
+    LED.writeSync(0); //set pin state to 0 (turn LED off)
+  }
+}
 
-// function endBlink() { //function to stop blinking
-//   clearInterval(blinkInterval); // Stop blink intervals
-//   LED.writeSync(0); // Turn LED off
-//   LED.unexport(); // Unexport GPIO to free resources
-// }
+function endBlink() { //function to stop blinking
+  clearInterval(blinkInterval); // Stop blink intervals
+  LED.writeSync(0); // Turn LED off
+  LED.unexport(); // Unexport GPIO to free resources
+}
 
-// setTimeout(endBlink, 5000); //stop blinking after 5 seconds
+setTimeout(endBlink, 5000); //stop blinking after 5 seconds
 
 // pushButton.watch(function (err, value) { //Watch for hardware interrupts on pushButton GPIO, specify callback function
 //   if (err) { //if an error
