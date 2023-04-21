@@ -4,36 +4,32 @@ var url = require('url');
 var fs = require('fs');
 var st = 0;
 var LED = new Gpio(27, 'out'); //use GPIO pin 4, and specify that it is output
-var SerialPort = require('serialport').SerialPort;
-// var portName = '/dev/ttyACM0';
-// var port = new SerialPort(portName, {
-//    baudRate: 9600,
-//    dataBits: 8,
-//    parity: 'none',
-//    stopBits: 1,
-//    flowControl: false
-// });
-var blinkInterval = setInterval(blinkLED, 1000); //run the blinkLED function every 250ms
-//var pushButton = new Gpio(4, 'in', 'both'); //use GPIO pin 17 as input, and 'both' button presses, and releases should be handled
+const { SerialPort } = require('serialport');
 
-// http.createServer(function (req, res) {
-//   res.writeHead(200, {'Content-Type': 'text/html'});
-//   res.end('Hello World!');
-// }).listen(8080);
-// port.write('main screen turn on', function(err) {
-//   if (err) {
-//     return console.log('Error on write: ', err.message)
-//   }
-//   console.log('message written')
-// })
+// Create a port
+const port = new SerialPort({
+  path: '/dev/ttyUSB0',
+  baudRate: 9600,
+});
+var blinkInterval = setInterval(blinkLED, 1000); //run the blinkLED function every 250ms
+//var pushButton = new Gpio(4, 'in', 'both');
+
+
+function sprint(str) {
+    port.write(str, function(err) {
+      if (err) {
+        return console.log('ERROR:write:', err.message)
+      }
+    })
+}
 // Open errors will be emitted as an error event
-// port.on('error', function(err) {
-//   console.log('Error: ', err.message)
-// })
+port.on('error', function(err) {
+  console.log('Error: ', err.message)
+})
 // // Read data that is available but keep the stream in "paused mode"
-// port.on('readable', function () {
-//   console.log('Data:', port.read())
-// })
+port.on('readable', function () {
+  console.log('Data:', port.read().toString())
+})
 // Switches the port into "flowing mode"
 // port.on('data', function (data) {
 //   console.log('Data:', data)
@@ -63,6 +59,7 @@ function blinkLED() { //function to start blinking
     LED.writeSync(0); //set pin state to 0 (turn LED off)
     st = 0;
   }
+  sprint('hello');
 }
 
 function endBlink() { //function to stop blinking
