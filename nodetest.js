@@ -4,7 +4,7 @@ var url = require('url');
 var fs = require('fs');
 var st = 0;
 var LED = new Gpio(27, 'out'); //use GPIO pin 4, and specify that it is output
-// var SerialPort = require('serialport').SerialPort;
+var SerialPort = require('serialport').SerialPort;
 // var portName = '/dev/ttyACM0';
 // var port = new SerialPort(portName, {
 //    baudRate: 9600,
