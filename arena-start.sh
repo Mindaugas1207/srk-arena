@@ -14,5 +14,5 @@ if [  "$PID_CH" != ""  ]; then
     sleep 1
   done
 fi
-sleep $awhile && chromium-browser -kiosk http://localhost:8080/pagetest.html & 
+sleep $awhile && chromium-browser -kiosk --no-sandbox http://localhost:8080/pagetest.html & 
 node nodetest.js &
