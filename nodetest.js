@@ -91,6 +91,8 @@ http.createServer(function (req, res) {
 function blinkLED() { //function to start blinking
   if (st === 0) { //check the pin state, if the state is 0 (or off)
     leds_set("FF,00,00","00,FF,00","00,00,FF");
+    ramp_set("500");
+    blade_set("500", "0", "0", "0");
     st = 1;
   } else {
     leds_set("00,00,00","00,00,00","00,00,00");
