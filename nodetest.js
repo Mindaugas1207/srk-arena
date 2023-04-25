@@ -47,20 +47,11 @@ port.on('readable', function () {
   console.log('Data:', newData)
   if (newData.startsWith("SET:INP("))
   {
-    let position = newData.search("(");
-    if (position >= 0)
+    let res2 = newData.replace(/[^0-9,]/g, '')
+    const myArray = res2.split(",");
+    if (myArray.length == 5)
     {
-      let res = newData.slice(position);
-      let position2 = res.search(")");
-      if (position2 >= 0)
-      {
-        let res2 = res.slice(0, position2);
-        const myArray = res2.split(",");
-        if (myArray.length == 5)
-        {
-          console.log('inp:', myArray[0] + myArray[1] + myArray[2] + myArray[3] + myArray[4]);
-        }
-      }
+      console.log('inp:', myArray[0] + myArray[1] + myArray[2] + myArray[3] + myArray[4]);
     }
   }
 })
