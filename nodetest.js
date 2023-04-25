@@ -18,6 +18,7 @@ const port = new SerialPort({
 });
 var blinkInterval;
 setTimeout(sys_start, 5000);
+var sys_start_ok = 0;
 
 function sprint(str) {
     port.write(str, function(err) {
@@ -60,6 +61,14 @@ port.on('readable', function () {
     {
       inputsValues = myArray;
       console.log('inp:', myArray[0] + myArray[1] + myArray[2] + myArray[3] + myArray[4]);
+    }
+  }
+  else if (newData.startsWith("START_OK()"))
+  {
+    if (sys_start_ok > 0)
+    {
+      sys_run();
+      sys_start_ok = 0;
     }
   }
   else
@@ -105,6 +114,12 @@ function endBlink() { //function to stop blinking
 }
 
 function sys_start()
+{
+  sprint("SYSTEM_START()\n");
+  sys_start_ok = 1;
+}
+
+function sys_run()
 {
   blinkInterval = setInterval(blinkLED, 1000); //run the blinkLED function every 250ms
   ramp_set("2000");
