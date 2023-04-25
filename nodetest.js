@@ -19,8 +19,20 @@ function sprint(str) {
     })
 }
 
-function leds_set(clr_str) {
-  var str = "SET:LED(" + clr_str + ")\n";
+function leds_set(clr1_str, clr2_str, clr3_str) {
+  var str = "SET:LED(" + clr1_str + ";" + clr2_str + ";" + clr3_str + ")\n";
+  sprint(str);
+  console.log('wr>', str)
+}
+
+function ramp_set(time_str) {
+  var str = "SET:RMP(" + time_str + ")\n";
+  sprint(str);
+  console.log('wr>', str)
+}
+
+function blade_set(time_str, rev_str, auto_str, auto_time_str) {
+  var str = "SET:SPN(" + time_str + "," + rev_str + "," + auto_str + "," + auto_time_str + ")\n";
   sprint(str);
   console.log('wr>', str)
 }
@@ -42,6 +54,7 @@ port.on('readable', function () {
 http.createServer(function (req, res) {
     var q = url.parse(req.url, true);
     var filename = "." + q.pathname;
+    console.log('SRV:', q.pathname);
     fs.readFile(filename, function (err, data) {
         if (err) {
             res.writeHead(404, { 'Content-Type': 'text/html' });
@@ -56,10 +69,10 @@ http.createServer(function (req, res) {
 
 function blinkLED() { //function to start blinking
   if (st === 0) { //check the pin state, if the state is 0 (or off)
-    leds_set("FF,00,00;00,FF,00;00,00,FF");
+    leds_set("FF,00,00","00,FF,00","00,00,FF");
     st = 1;
   } else {
-    leds_set("00,00,00;00,00,00;00,00,00");
+    leds_set("00,00,00","00,00,00","00,00,00");
     st = 0;
   }
 }
