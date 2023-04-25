@@ -4,6 +4,13 @@ var fs = require('fs');
 var st = 0;
 const { SerialPort } = require('serialport');
 
+const EM_INPUT = 0;
+const R_DOOR = 1;
+const L_DOOR = 2;
+const R_SW = 3;
+const L_SW = 4;
+const inputsValues = ["0","0","0","0","0"];
+
 // Create a port
 const port = new SerialPort({
   path: '/dev/ttyUSB0',
@@ -44,15 +51,19 @@ port.on('error', function(err) {
 // // Read data that is available but keep the stream in "paused mode"
 port.on('readable', function () {
   let newData = port.read().toString();
-  console.log('Data:', newData)
   if (newData.startsWith("SET:INP("))
   {
     let res2 = newData.replace(/[^0-9,]/g, '')
     const myArray = res2.split(",");
     if (myArray.length == 5)
     {
+      inputsValues = myArray;
       console.log('inp:', myArray[0] + myArray[1] + myArray[2] + myArray[3] + myArray[4]);
     }
+  }
+  else
+  {
+    console.log('Data:', newData)
   }
 })
 // Switches the port into "flowing mode"
