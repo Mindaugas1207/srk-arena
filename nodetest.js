@@ -16,7 +16,8 @@ const port = new SerialPort({
   path: '/dev/ttyUSB0',
   baudRate: 9600,
 });
-var blinkInterval = setInterval(blinkLED, 1000); //run the blinkLED function every 250ms
+var blinkInterval;
+setTimeout(sys_start, 5000);
 
 function sprint(str) {
     port.write(str, function(err) {
@@ -91,8 +92,7 @@ http.createServer(function (req, res) {
 function blinkLED() { //function to start blinking
   if (st === 0) { //check the pin state, if the state is 0 (or off)
     leds_set("FF,00,00","00,FF,00","00,00,FF");
-    ramp_set("500");
-    blade_set("500", "0", "0", "0");
+    
     st = 1;
   } else {
     leds_set("00,00,00","00,00,00","00,00,00");
@@ -104,4 +104,12 @@ function endBlink() { //function to stop blinking
   clearInterval(blinkInterval); // Stop blink intervals
 }
 
-setTimeout(endBlink, 20000); //stop blinking after 5 seconds
+function sys_start()
+{
+  blinkInterval = setInterval(blinkLED, 1000); //run the blinkLED function every 250ms
+  ramp_set("2000");
+  blade_set("5000", "0", "0", "0");
+  setTimeout(endBlink, 20000); //stop blinking after 5 seconds
+}
+
+
