@@ -9,7 +9,7 @@ const R_DOOR = 1;
 const L_DOOR = 2;
 const R_SW = 3;
 const L_SW = 4;
-const inputsValues = ["0","0","0","0","0"];
+var inputsValues = ["0","0","0","0","0"];
 
 // Create a port
 const port = new SerialPort({
