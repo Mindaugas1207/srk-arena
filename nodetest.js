@@ -43,7 +43,26 @@ port.on('error', function(err) {
 })
 // // Read data that is available but keep the stream in "paused mode"
 port.on('readable', function () {
-  console.log('Data:', port.read().toString())
+  let newData = port.read().toString();
+  console.log('Data:', newData)
+  if (newData.startsWith("SET:INP("))
+  {
+    let position = newData.search("(");
+    if (position >= 0)
+    {
+      let res = newData.slice(position);
+      let position2 = res.search(")");
+      if (position2 >= 0)
+      {
+        let res2 = res.slice(0, position2);
+        const myArray = res2.split(",");
+        if (myArray.length == 5)
+        {
+          console.log('inp:', myArray[0] + myArray[1] + myArray[2] + myArray[3] + myArray[4]);
+        }
+      }
+    }
+  }
 })
 // Switches the port into "flowing mode"
 // port.on('data', function (data) {
