@@ -123,19 +123,41 @@ port.on('readable', function () {
   }
 })
 
+const data = {
+  "name": "John",
+  "age": 34,
+  "hobby": {
+  "reading" : true,
+  "gaming" : false,
+  "sport" : "baseball"
+  },
+  "class" : ["JavaScript", "HTML", "CSS"]
+}
+
 http.createServer(function (req, res) {
     var q = url.parse(req.url, true);
-    var filename = "." + q.pathname;
+    
     console.log('SRV:', q.pathname);
-    fs.readFile(filename, function (err, data) {
-        if (err) {
-            res.writeHead(404, { 'Content-Type': 'text/html' });
-            return res.end("404 Not Found");
-        }
-        res.writeHead(200, { 'Content-Type': 'text/html' });
-        res.write(data);
-        return res.end();
-    });
+    
+    if (q.pathname = "/data")
+    {
+      res.setHeader("Content-Type", "application/json");
+      res.writeHead(200);
+      return res.end(JSON.stringify(data, null, 3));
+    }
+    else
+    {
+      var filename = "." + q.pathname;
+      fs.readFile(filename, function (err, data) {
+          if (err) {
+              res.writeHead(404, { 'Content-Type': 'text/html' });
+              return res.end("404 Not Found");
+          }
+          res.writeHead(200, { 'Content-Type': 'text/html' });
+          res.write(data);
+          return res.end();
+      });
+    }
 }).listen(8080);
 
 function startBlink(period, timeout, C1, C2, C3, _C1, _C2, _C3) {
