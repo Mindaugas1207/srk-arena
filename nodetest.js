@@ -143,6 +143,7 @@ http.createServer(function (req, res) {
     }
     else if (q.pathname == "/pause")
     {
+      startBlink(500, 20000, "00,00,FF", "00,FF,00", "FF,00,00", "00,00,00", "00,00,00", "00,00,00");
       res.writeHead(200);
       return res.end();
     }
