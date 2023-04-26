@@ -120,6 +120,10 @@ port.on('readable', function () {
       sys_start_state = SYS_START_OK;
     }
   }
+  else if (newData.startsWith("OK"))
+  {
+    //ok
+  }
   else
   {
     console.log('Data:', newData)
