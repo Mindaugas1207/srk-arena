@@ -7,12 +7,9 @@
 * {
   box-sizing: border-box;
 }
-
-/* Create two unequal columns that floats next to each other */
 .column {
   float: left;
   padding: 10px;
-  height: 300px; /* Should be removed. Only for demonstration */
 }
 
 .left {
@@ -23,7 +20,6 @@
   width: 50%;
 }
 
-/* Clear floats after the columns */
 .row:after {
   content: "";
   display: table;
@@ -77,7 +73,7 @@
 </div>
 <div class="row">
   <div class="column left" style='text-align:left'>
-    <button class="btn" style = "min-width: 150px;">Button</button>
+    <button class="btn" style = "min-width: 150px;">A</button>
     <div class="dropdown">
       <button class="btn" style="border-left:1px solid #0d8bf2; min-width: 60px;">
       0
@@ -89,7 +85,7 @@
     </div>
   </div>
   <div class="column right" style='text-align:center'>
-    <button class="btn" style = "min-width: 150px;">Button</button>
+    <button class="btn" style = "min-width: 150px;">B</button>
     <div class="dropdown">
       <button class="btn" style="border-left:1px solid #0d8bf2; min-width: 60px;">
       0
