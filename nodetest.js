@@ -138,8 +138,13 @@ http.createServer(function (req, res) {
     if (q.pathname == "/data")
     {
       var data = {
-        "sec": t_seconds,
-        "min": t_minutes
+        "SEC": t_seconds,
+        "MIN": t_minutes,
+        "EM": sys_em_stop,
+        "RD": sys_right_door,
+        "LD": sys_left_door,
+        "RS": sys_right_sw,
+        "LS": sys_left_sw
       }
       res.setHeader("Content-Type", "application/json");
       res.writeHead(200);
