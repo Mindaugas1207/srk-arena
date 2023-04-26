@@ -16,6 +16,9 @@ const port = new SerialPort({
   baudRate: 9600,
 });
 
+var t_seconds = 0;
+var t_minutes = 0;
+
 var blinkInterval;
 var blinkTimeout;
 const SYS_START_NO = 0;
@@ -123,17 +126,6 @@ port.on('readable', function () {
   }
 })
 
-const data = {
-  "name": "John",
-  "age": 34,
-  "hobby": {
-  "reading" : true,
-  "gaming" : false,
-  "sport" : "baseball"
-  },
-  "class" : ["JavaScript", "HTML", "CSS"]
-}
-
 http.createServer(function (req, res) {
     var q = url.parse(req.url, true);
     
@@ -141,6 +133,10 @@ http.createServer(function (req, res) {
     
     if (q.pathname = "/data")
     {
+      var data = {
+        "sec": t_seconds,
+        "min": t_minutes
+      }
       res.setHeader("Content-Type", "application/json");
       res.writeHead(200);
       return res.end(JSON.stringify(data, null, 3));
@@ -201,13 +197,22 @@ function sys_start()
   sys_interval = setInterval(sys_run, 1000);
 }
 
+// Set the date we're counting down to
+var countStart = new Date().getTime();
+function getElapsed(){
+  var now = new Date().getTime();
+  var distance = now - countStart;
+  t_minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  t_seconds = Math.floor((distance % (1000 * 60)) / 1000);
+}
+
 function sys_run()
 {
   if (sys_state === SYS_STATE_START)
   {
     if (sys_start_state === SYS_START_OK)
     {
-
+      getElapsed();
     }
   }
   
