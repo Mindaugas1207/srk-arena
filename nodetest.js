@@ -145,6 +145,16 @@ http.createServer(function (req, res) {
       res.writeHead(200);
       return res.end(JSON.stringify(data, null, 3));
     }
+    else if (q.pathname = "/pause")
+    {
+      res.writeHead(200);
+      return res.end();
+    }
+    else if (q.pathname = "/stop")
+    {
+      res.writeHead(200);
+      return res.end();
+    }
     else
     {
       var filename = "." + q.pathname;
