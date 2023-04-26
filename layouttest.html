@@ -82,6 +82,10 @@ function getValue(){
 	xh.open("GET", "/data", true);
 	xh.send(null);
 }
+
+var x = setInterval(function() {
+    getValue();
+}, 1000);
 </script>
 </head>
 <body>
