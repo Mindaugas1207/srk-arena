@@ -131,22 +131,22 @@ http.createServer(function (req, res) {
     
     console.log('SRV:', q.pathname);
     
-    if (q.pathname = "/data")
+    if (q.pathname == "/data")
     {
       var data = {
         "sec": t_seconds,
         "min": t_minutes
       }
-      //res.setHeader("Content-Type", "application/json");
-      //res.writeHead(200);
+      res.setHeader("Content-Type", "application/json");
+      res.writeHead(200);
       return res.end(JSON.stringify(data, null, 3));
     }
-    else if (q.pathname = "/pause")
+    else if (q.pathname == "/pause")
     {
       res.writeHead(200);
       return res.end();
     }
-    else if (q.pathname = "/stop")
+    else if (q.pathname == "/stop")
     {
       res.writeHead(200);
       return res.end();
