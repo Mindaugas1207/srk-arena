@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<title>SRK ARENA</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
@@ -65,6 +66,23 @@
   background-color: #0b7dda;
 }
 </style>
+<script>
+
+function getValue(){
+	var xh = new XMLHttpRequest();
+	xh.onreadystatechange = function(){
+		if (xh.readyState == 4 && xh.status == 200){
+		var res = JSON.parse(xh.responseText);
+		Object.entries(res).forEach((entry) => {
+			const [id, value] = entry;
+			document.getElementById(id).innerHTML = value;
+		});
+		}
+	};
+	xh.open("GET", "/data", true);
+	xh.send(null);
+}
+</script>
 </head>
 <body>
 <h2></h2>
@@ -97,10 +115,17 @@
     </div>
   </div>
 </div>
-
-
-
-
+<button>START</button><button>STOP</button>
+<button>PAUSE</button><button>CONFIRM</button>
+<button>CANCEL</button><button>RESET</button>
+<button>CONFIRM A</button><button>CONFIRM B</button>
+<p id = "SEC">00</p>
+<p id = "MIN">00</p>
+<p id = "EM">0</p>
+<p id = "RD">0</p>
+<p id = "LD">0</p>
+<p id = "RS">0</p>
+<p id = "LS">0</p>
 
 </body>
 </html>
