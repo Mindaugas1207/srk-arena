@@ -1005,7 +1005,7 @@ function api_getMatches(){
   });
   
   const options = {
-    hostname: 'https://'+api_user+':'+api_key+'api.challonge.com',
+    hostname: 'https://'+api_user+':'+api_key+'@api.challonge.com',
     port: 443,
     path: '/v1/tournaments/"+api_tournament+"/matches.json',
     method: 'GET',
