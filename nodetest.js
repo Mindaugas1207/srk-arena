@@ -629,7 +629,7 @@ function setRamp(enbl)
   rmp_en = enbl;
   if (enbl)
   {
-    ramp_set(sys_weapons_time_req);
+    ramp_set(240000);
   }
   else
   {
@@ -644,7 +644,7 @@ function setBlade(enbl)
   bld_en = enbl;
   if (enbl)
   {
-    blade_set(sys_weapons_time_req,false,true,15000);
+    blade_set(240000,false,true,15000);
   }
   else
   {
