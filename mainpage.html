@@ -112,6 +112,7 @@ function getValue(){
       document.getElementById("COMPA").innerHTML = SYSTEM_DATA.COMPA.toString();
       document.getElementById("PNTA").innerHTML = SYSTEM_DATA.PNTA.toString();
       document.getElementById("PNTB").innerHTML = SYSTEM_DATA.PNTB.toString();
+      document.getElementById("SYS_STATE").innerHTML = SYSTEM_DATA.SYS.toString();
       setTimeout(getValue, 500);
 		}
 	};
@@ -181,6 +182,7 @@ getValue();
 </head>
 <body>
 <div>
+<p id = "SYS_STATE">0</p>
 <p id = "TIME" style = "font-size: 80px; font-family: 'Lucida Console', 'Courier New', monospace; text-align: center; letter-spacing: 10px;">00:00</p>
 </div>
 <div class="row">
