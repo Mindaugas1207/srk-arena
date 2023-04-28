@@ -1048,14 +1048,6 @@ function api_getParticipantA(match_num){
   }).on('error', err => {
     console.log('Get PartA Error: ', err.message);
   });
-	var xh = new XMLHttpRequest();
-	xh.onreadystatechange = function(){
-		if (xh.readyState === XMLHttpRequest.DONE && xh.status === 200){
-      var res = JSON.parse(xh.responseText);
-      sys_compA_name = res.participant.name;
-      api_participantA_ok = true;
-		}
-	};
 }
 
 function api_getParticipantB(match_num){
