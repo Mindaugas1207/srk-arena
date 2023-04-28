@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>SRK ARENA</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+* {
+  box-sizing: border-box;
+}
+.column {
+  float: left;
+  padding: 10px;
+}
+
+.left {
+  width: 50%;
+}
+
+.right {
+  width: 50%;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.btn {
+  background-color: #2196F3;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  outline: none;
+}
+
+.dropdown {
+  position: absolute;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 60px;
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #ddd}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.btn:hover, .dropdown:hover .btn {
+  background-color: #0b7dda;
+}
+</style>
+<script>
+
+const SYS_STATE_INIT = 0;
+const SYS_STATE_START = 1;
+const SYS_STATE_ARRIVAL = 2;
+const SYS_STATE_PREP = 3;
+const SYS_STATE_MATCH = 4;
+const SYS_STATE_IDLE = 5;
+const SYS_STATE_DEMO = 6;
+const SYS_STATE_RESULTS = 7;
+
+var SYSTEM_DATA = {
+        "SYS": SYS_STATE_INIT,
+        "SEC": 0,
+        "MIN": 0,
+        "EM": false,
+        "RD": false,
+        "LD": false,
+        "RS": false,
+        "LS": false,
+        "MATCH": 0,
+        "ROUND": 0,
+        "COMPA": "Player A",
+        "COMPB": "Player B",
+        "PNTA": 0,
+        "PNTB": 0,
+        "ARVA": false,
+        "ARVB": false,
+        "RDYA": false,
+        "RDYB": false,
+        "TIMA": false,
+        "TIMB": false,
+        "SECA": 0,
+        "SECB": 0
+      };
+
+function getValue(){
+	var xh = new XMLHttpRequest();
+	xh.onreadystatechange = function(){
+		if (xh.readyState === XMLHttpRequest.DONE && xh.status === 200){
+      SYSTEM_DATA = JSON.parse(xh.responseText);
+      document.getElementById("TIME").innerHTML = res.MIN.toString() + ":" + res.SEC.toString();
+      document.getElementById("COMPA").innerHTML = res.COMPA.toString();
+      document.getElementById("COMPA").innerHTML = res.COMPA.toString();
+      document.getElementById("CNTA").innerHTML = res.PNTA.toString();
+      document.getElementById("CNTB").innerHTML = res.PNTB.toString();
+      setTimeout(getValue, 500);
+		}
+	};
+	xh.open("GET", "/data", true);
+	xh.send(null);
+}
+
+function postf(fstr){
+	var xh = new XMLHttpRequest();
+	xh.open("POST", "/"+fstr, true);
+	xh.send(null);
+}
+
+function call_buttonA()
+{
+  if (SYSTEM_DATA.SYS === SYS_STATE_ARRIVAL)
+  {
+    if (SYSTEM_DATA.ARVA)
+      postf("cancelA");
+    else
+      postf("confirmA");
+  }
+  else if (SYSTEM_DATA.SYS === SYS_STATE_PREP)
+  {
+    if (SYSTEM_DATA.RDYA)
+      postf("cancelA");
+    else
+      postf("confirmA");
+  }
+  else if (SYSTEM_DATA.SYS === SYS_STATE_MATCH)
+  {
+    if (SYSTEM_DATA.TIMA)
+      postf("cancelA");
+    else
+      postf("confirmA");
+  }
+}
+
+function call_buttonB()
+{
+  if (SYSTEM_DATA.SYS === SYS_STATE_ARRIVAL)
+  {
+    if (SYSTEM_DATA.ARVB)
+      postf("cancelB");
+    else
+      postf("confirmB");
+  }
+  else if (SYSTEM_DATA.SYS === SYS_STATE_PREP)
+  {
+    if (SYSTEM_DATA.RDYB)
+      postf("cancelB");
+    else
+      postf("confirmB");
+  }
+  else if (SYSTEM_DATA.SYS === SYS_STATE_MATCH)
+  {
+    if (SYSTEM_DATA.TIMB)
+      postf("cancelB");
+    else
+      postf("confirmB");
+  }
+}
+
+getValue();
+
+</script>
+</head>
+<body>
+<div>
+<p id = "TIME" style = "font-size: 80px; font-family: 'Lucida Console', 'Courier New', monospace; text-align: center; letter-spacing: 10px;">00:00</p>
+</div>
+<div class="row">
+  <div class="column left" style='text-align:left'>
+    <button class="btn" id = "COMPA" style = "min-width: 150px;" onclick="call_buttonA()">A</button>
+    <div class="dropdown">
+      <button class="btn" id = "PNTA" style="border-left:1px solid #0d8bf2; min-width: 60px;">
+      0
+      </button>
+      <div class="dropdown-content">
+        <a href="#" onclick="postf('addA')">+</a>
+        <a href="#" onclick="postf('subA')">-</a>
+      </div>
+    </div>
+  </div>
+  <div class="column right" style='text-align:center'>
+    <button class="btn" id = "COMPB" style = "min-width: 150px;" onclick="call_buttonB()">B</button>
+    <div class="dropdown">
+      <button class="btn" id = "PNTB" style="border-left:1px solid #0d8bf2; min-width: 60px;">
+      0
+      </button>
+      <div class="dropdown-content">
+        <a href="#" onclick="postf('addB')">+</a>
+        <a href="#" onclick="postf('subB')">-</a>
+      </div>
+    </div>
+  </div>
+</div>
+<button onclick="postf('demo')">DEMO</button>
+<button onclick="postf('matchStart')">START MATCH</button>
+<button onclick="postf('matchEnd')">END MATCH</button>
+<button onclick="postf('resetMatches')">RESET MATCHES</button>
+<button onclick="postf('pause')">PAUSE</button>
+<button onclick="postf('resume')">RESUME</button>
+<button onclick="postf('stop')">STOP</button>
+<button onclick="postf('reset')">RESET</button>
+<button onclick="postf('exit')">EXIT</button>
+<button onclick="postf('next')">NEXT</button>
+<button onclick="postf('weapons')">WEAPONS</button>
+
+<button onclick="postf('confirmResults')">RESULT CONFIRM</button>
+<button onclick="postf('cancelResults')">RESULT CANCEL</button>
+</body>
+</html>
