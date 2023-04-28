@@ -1,4 +1,5 @@
 var http = require('http');
+const querystring = require('querystring');
 var url = require('url');
 var fs = require('fs');
 var st = 0;
@@ -1000,6 +1001,34 @@ function input_update_states()
 }
 
 function api_getMatches(){
+  const postData = querystring.stringify({
+  });
+  
+  const options = {
+    hostname: 'https://'+api_user+':'+api_key+'api.challonge.com',
+    port: 443,
+    path: '/v1/tournaments/"+api_tournament+"/matches.json',
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Content-Length': postData.length
+    }
+  };
+  
+  const req = https.request(options, (res) => {
+    console.log(`statusCode: ${res.statusCode}`);
+    res.on('data', (d) => {
+      process.stdout.write(d);
+    });
+  });
+  
+  req.on('error', (error) => {
+    console.error(error);
+  });
+  
+  req.write(postData);
+  req.end();
+
 	var xh = new XMLHttpRequest();
 	xh.onreadystatechange = function(){
 		if (xh.readyState === XMLHttpRequest.DONE && xh.status === 200){
@@ -1052,9 +1081,36 @@ function api_getParticipantB(match_num){
 }
 
 function api_setMatchInactive(match_num){
-	var xh = new XMLHttpRequest();
-	xh.open("POST", "https://api.challonge.com/v1/tournaments/"+api_tournament+"/matches/"+api_matches[match_num].match.id+"/unmark_as_underway.json", true, api_user, api_key);
-	xh.send(null);
+  const postData = querystring.stringify({
+  });
+  
+  const options = {
+    hostname: 'https://api.challonge.com',
+    port: 443,
+    path: '/v1/tournaments/"+api_tournament+"/matches/"+api_matches[match_num].match.id+"/unmark_as_underway.json',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Content-Length': postData.length
+    }
+  };
+  
+  const req = https.request(options, (res) => {
+    console.log(`statusCode: ${res.statusCode}`);
+    res.on('data', (d) => {
+      process.stdout.write(d);
+    });
+  });
+  
+  req.on('error', (error) => {
+    console.error(error);
+  });
+  
+  req.write(postData);
+  req.end();
+	//var xh = new XMLHttpRequest();
+	//xh.open("POST", "https://api.challonge.com/v1/tournaments/"+api_tournament+"/matches/"+api_matches[match_num].match.id+"/unmark_as_underway.json", true, api_user, api_key);
+	//xh.send(null);
 }
 
 function api_setMatchActive(match_num){
@@ -1181,7 +1237,6 @@ function check_timeB()
 {
   return sys_timer_endB && sys_timer_enabledB;
 }
-
 
 //blinkInterval = setInterval(blinkLED, 1000); //run the blinkLED function every 250ms
 //ramp_set("2000");
