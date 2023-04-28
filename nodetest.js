@@ -626,6 +626,7 @@ function setRamp(enbl)
 {
   if (rmp_en == enbl)
     return;
+  rmp_en = enbl;
   if (enbl)
   {
     ramp_set(sys_weapons_time_req);
@@ -640,6 +641,7 @@ function setBlade(enbl)
 {
   if (bld_en == enbl)
     return;
+  bld_en = enbl;
   if (enbl)
   {
     blade_set(sys_weapons_time_req,false,true,15000);
@@ -904,7 +906,7 @@ function match_run()
       }
       else
       {
-        led_set(LEDA,COLOR_WHITE,COLOR_WHITE,0,0);
+        led_set(LEDA,COLOR_RED,COLOR_WHITE,1000,1000);
       }
 
       if (sys_left_door_open)
@@ -913,7 +915,7 @@ function match_run()
       }
       else
       {
-        led_set(LEDB,COLOR_WHITE,COLOR_WHITE,0,0);
+        led_set(LEDB,COLOR_RED,COLOR_WHITE,1000,1000);
       }
 
       if (sys_right_door_open || sys_left_door_open)
@@ -923,7 +925,7 @@ function match_run()
       }
       else
       {
-        led_set(LEDC,COLOR_WHITE,COLOR_WHITE,0,0);
+        led_set(LEDC,COLOR_RED,COLOR_WHITE,1000,1000);
       }
     }
   }
@@ -965,12 +967,13 @@ function match_run()
         led_set(LEDB,COLOR_WHITE,COLOR_WHITE,0,0);
       }
 
-      if (sys_right_door_open || sys_left_door_open)
+      if (sys_right_door_open || sys_left_door_open || sys_em_stop)
       {
         led_set(LEDC,COLOR_RED,COLOR_RED,0,0);
         pause_time();
         cancel_timeA();
         cancel_timeB();
+        sys_weapons_on = false;
       }
       else
       {
@@ -981,7 +984,10 @@ function match_run()
             sys_weapons_on = true;
           }
         }
-        led_set(LEDC,COLOR_WHITE,COLOR_WHITE,0,0);
+        else
+        {
+          led_set(LEDC,COLOR_RED,COLOR_WHITE,250,250);
+        }
       }
     }
   }
