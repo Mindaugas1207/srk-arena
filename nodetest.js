@@ -267,7 +267,7 @@ http.createServer(function (req, res) {
       }
       else if (sys_state === SYS_STATE_MATCH)
       {
-        start_timeA(MATCH_INACTIVE_TIME);
+        start_timeA(MATCH_INACTIVE_TIME * 1000);
       }
       res.writeHead(200);
       return res.end();
@@ -284,7 +284,7 @@ http.createServer(function (req, res) {
       }
       else if (sys_state === SYS_STATE_MATCH)
       {
-        start_timeB(MATCH_INACTIVE_TIME);
+        start_timeB(MATCH_INACTIVE_TIME * 1000);
       }
       res.writeHead(200);
       return res.end();
@@ -326,24 +326,28 @@ http.createServer(function (req, res) {
     else if (q.pathname == "/addA")
     {
       sys_compA_pnts += 1;
+      sys_compA_pnts_round += 1;
       res.writeHead(200);
       return res.end();
     }
     else if (q.pathname == "/addB")
     {
       sys_compB_pnts += 1;
+      sys_compB_pnts_round += 1;
       res.writeHead(200);
       return res.end();
     }
     else if (q.pathname == "/subA")
     {
       sys_compA_pnts -= 1;
+      sys_compA_pnts_round -= 1;
       res.writeHead(200);
       return res.end();
     }
     else if (q.pathname == "/subB")
     {
       sys_compB_pnts -= 1;
+      sys_compB_pnts_round -= 1;
       res.writeHead(200);
       return res.end();
     }
@@ -1263,7 +1267,7 @@ function cancel_timeA()
 {
   sys_timer_enabledA = false;
   t_remainingA = 0;
-  sys_timer_endA = true;
+  sys_timer_endA = false;
   t_minutesA = 0;
   t_secondsA = 0;
 }
@@ -1314,7 +1318,7 @@ function cancel_timeB()
 {
   sys_timer_enabledB = false;
   t_remainingB = 0;
-  sys_timer_endB = true;
+  sys_timer_endB = false;
   t_minutesB = 0;
   t_secondsB = 0;
 }
