@@ -153,13 +153,14 @@ function sprint(str) {
 
 var ledOnClr = [COLOR_OFF, COLOR_OFF, COLOR_OFF];
 var ledOffClr = [COLOR_OFF, COLOR_OFF, COLOR_OFF];
-var ledBlinkPeriod = [0, 0, 0];
+var ledBlinkPeriod_on = [0, 0, 0];
+var ledBlinkPeriod_off = [0, 0, 0];
 
-function led_set(ledN, clrOn, clrOff, BlinkPeriod) {
+function led_set(ledN, clrOn, clrOff, BlinkPeriod_on, BlinkPeriod_off) {
 
-  if (ledOnClr[ledN] == clrOn && ledOffClr[ledN] == clrOff && ledBlinkPeriod[ledN] == BlinkPeriod)
+  if (ledOnClr[ledN] == clrOn && ledOffClr[ledN] == clrOff && ledBlinkPeriod_on[ledN] == BlinkPeriod_on && ledBlinkPeriod_off[ledN] == BlinkPeriod_off)
     return
-  var str = "SET:LED" + (ledN + 1).toString() + "(" + clrOn + ";" + clrOff + ";" + BlinkPeriod.toString() + ")\n";
+  var str = "SET:LED" + (ledN + 1).toString() + "(" + clrOn + ";" + clrOff + ";" + BlinkPeriod_on.toString() + BlinkPeriod_off.toString() + ")\n";
   sprint(str);
 }
 
@@ -679,9 +680,9 @@ function arrival_start()
 {
   start_time(ARRIVAL_TIME * 60000);
   sys_arrival_state = SYS_ARRIVAL_START;
-  led_set(LEDA,COLOR_YELLOW,COLOR_YELLOW,0);
-  led_set(LEDB,COLOR_YELLOW,COLOR_YELLOW,0);
-  led_set(LEDC,COLOR_YELLOW,COLOR_YELLOW,0);
+  led_set(LEDA,COLOR_YELLOW,COLOR_YELLOW,0,0);
+  led_set(LEDB,COLOR_YELLOW,COLOR_YELLOW,0,0);
+  led_set(LEDC,COLOR_YELLOW,COLOR_YELLOW,0,0);
 }
 
 function arrival_run()
@@ -694,30 +695,30 @@ function arrival_run()
 
       if (sys_compA_arrived)
       {
-        led_set(LEDA,COLOR_GREEN,COLOR_GREEN,0);
+        led_set(LEDA,COLOR_GREEN,COLOR_GREEN,0,0);
       }
       else
       {
-        led_set(LEDA,COLOR_RED,COLOR_RED,0);
+        led_set(LEDA,COLOR_RED,COLOR_RED,0,0);
       }
 
       if (sys_compB_arrived)
       {
-        led_set(LEDB,COLOR_GREEN,COLOR_GREEN,0);
+        led_set(LEDB,COLOR_GREEN,COLOR_GREEN,0,0);
       }
       else
       {
-        led_set(LEDB,COLOR_RED,COLOR_RED,0);
+        led_set(LEDB,COLOR_RED,COLOR_RED,0,0);
       }
 
       if (sys_compA_arrived && sys_compB_arrived)
       {
-        led_set(LEDC,COLOR_GREEN,COLOR_GREEN,0);
+        led_set(LEDC,COLOR_GREEN,COLOR_GREEN,0,0);
         sys_next_state = SYS_STATE_PREP;
       }
       else
       {
-        led_set(LEDC,COLOR_RED,COLOR_RED,0);
+        led_set(LEDC,COLOR_RED,COLOR_RED,0,0);
         sys_next_state = SYS_STATE_RESULTS;
       }
     }
@@ -725,43 +726,43 @@ function arrival_run()
     {
       if (sys_compA_arrived)
       {
-        led_set(LEDA,COLOR_GREEN,COLOR_GREEN,0);
+        led_set(LEDA,COLOR_GREEN,COLOR_GREEN,0,0);
       }
       else if (t_remaining < ARRIVAL_WARN_TIME * 1000)
       {
-        led_set(LEDA,COLOR_YELLOW,COLOR_RED,ARRIVAL_WARN_PRD*1000);
+        led_set(LEDA,COLOR_YELLOW,COLOR_RED,ARRIVAL_WARN_PRD*1000,ARRIVAL_WARN_PRD*1000);
       }
       else
       {
-        led_set(LEDA,COLOR_YELLOW,COLOR_YELLOW,0);
+        led_set(LEDA,COLOR_YELLOW,COLOR_YELLOW,0,0);
       }
 
       if (sys_compB_arrived)
       {
-        led_set(LEDB,COLOR_GREEN,COLOR_GREEN,0);
+        led_set(LEDB,COLOR_GREEN,COLOR_GREEN,0,0);
       }
       else if (t_remaining < ARRIVAL_WARN_TIME * 1000)
       {
-        led_set(LEDB,COLOR_YELLOW,COLOR_RED,ARRIVAL_WARN_PRD*1000);
+        led_set(LEDB,COLOR_YELLOW,COLOR_RED,ARRIVAL_WARN_PRD*1000,ARRIVAL_WARN_PRD*1000);
       }
       else
       {
-        led_set(LEDB,COLOR_YELLOW,COLOR_YELLOW,0);
+        led_set(LEDB,COLOR_YELLOW,COLOR_YELLOW,0,0);
       }
 
       if (sys_compA_arrived && sys_compB_arrived)
       {
-        led_set(LEDC,COLOR_GREEN,COLOR_GREEN,0);
+        led_set(LEDC,COLOR_GREEN,COLOR_GREEN,0,0);
         pause_time();
         sys_next_state = SYS_STATE_PREP;
       }
       else if (t_remaining < ARRIVAL_WARN_TIME * 1000)
       {
-        led_set(LEDC,COLOR_YELLOW,COLOR_RED,ARRIVAL_WARN_PRD*1000);
+        led_set(LEDC,COLOR_YELLOW,COLOR_RED,ARRIVAL_WARN_PRD*1000,ARRIVAL_WARN_PRD*1000);
       }
       else
       {
-        led_set(LEDC,COLOR_YELLOW,COLOR_YELLOW,0);
+        led_set(LEDC,COLOR_YELLOW,COLOR_YELLOW,0,0);
       }
     }
   }
@@ -775,9 +776,9 @@ function prep_start()
   {
     sys_round_num = sys_round_num + 1;
   }
-  led_set(LEDA,COLOR_YELLOW,COLOR_YELLOW,0);
-  led_set(LEDB,COLOR_YELLOW,COLOR_YELLOW,0);
-  led_set(LEDC,COLOR_YELLOW,COLOR_YELLOW,0);
+  led_set(LEDA,COLOR_YELLOW,COLOR_YELLOW,0,0);
+  led_set(LEDB,COLOR_YELLOW,COLOR_YELLOW,0,0);
+  led_set(LEDC,COLOR_YELLOW,COLOR_YELLOW,0,0);
 }
 
 function prep_run()
@@ -790,30 +791,30 @@ function prep_run()
 
       if (sys_compA_ready)
       {
-        led_set(LEDA,COLOR_GREEN,COLOR_GREEN,0);
+        led_set(LEDA,COLOR_GREEN,COLOR_GREEN,0,0);
       }
       else
       {
-        led_set(LEDA,COLOR_RED,COLOR_RED,0);
+        led_set(LEDA,COLOR_RED,COLOR_RED,0,0);
       }
 
       if (sys_compB_ready)
       {
-        led_set(LEDB,COLOR_GREEN,COLOR_GREEN,0);
+        led_set(LEDB,COLOR_GREEN,COLOR_GREEN,0,0);
       }
       else
       {
-        led_set(LEDB,COLOR_RED,COLOR_RED,0);
+        led_set(LEDB,COLOR_RED,COLOR_RED,0,0);
       }
 
       if (sys_compA_ready && sys_compB_ready)
       {
-        led_set(LEDC,COLOR_GREEN,COLOR_GREEN,0);
+        led_set(LEDC,COLOR_GREEN,COLOR_GREEN,0,0);
         sys_next_state = SYS_STATE_MATCH;
       }
       else
       {
-        led_set(LEDC,COLOR_RED,COLOR_RED,0);
+        led_set(LEDC,COLOR_RED,COLOR_RED,0,0);
         sys_next_state = SYS_STATE_RESULTS;
       }
     }
@@ -821,43 +822,43 @@ function prep_run()
     {
       if (sys_compA_ready)
       {
-        led_set(LEDA,COLOR_GREEN,COLOR_GREEN,0);
+        led_set(LEDA,COLOR_GREEN,COLOR_GREEN,0,0);
       }
       else if (t_remaining < PREP_WARN_TIME * 1000)
       {
-        led_set(LEDA,COLOR_YELLOW,COLOR_RED,PREP_WARN_PRD*1000);
+        led_set(LEDA,COLOR_YELLOW,COLOR_RED,PREP_WARN_PRD*1000,PREP_WARN_PRD*1000);
       }
       else
       {
-        led_set(LEDA,COLOR_YELLOW,COLOR_YELLOW,0);
+        led_set(LEDA,COLOR_YELLOW,COLOR_YELLOW,0,0);
       }
 
       if (sys_compB_ready)
       {
-        led_set(LEDB,COLOR_GREEN,COLOR_GREEN,0);
+        led_set(LEDB,COLOR_GREEN,COLOR_GREEN,0,0);
       }
       else if (t_remaining < PREP_WARN_TIME * 1000)
       {
-        led_set(LEDB,COLOR_YELLOW,COLOR_RED,PREP_WARN_PRD*1000);
+        led_set(LEDB,COLOR_YELLOW,COLOR_RED,PREP_WARN_PRD*1000,PREP_WARN_PRD*1000);
       }
       else
       {
-        led_set(LEDB,COLOR_YELLOW,COLOR_YELLOW,0);
+        led_set(LEDB,COLOR_YELLOW,COLOR_YELLOW,0,0);
       }
 
       if (sys_compA_ready && sys_compB_ready)
       {
-        led_set(LEDC,COLOR_GREEN,COLOR_GREEN,0);
+        led_set(LEDC,COLOR_GREEN,COLOR_GREEN,0,0);
         pause_time();
         sys_next_state = SYS_STATE_MATCH;
       }
       else if (t_remaining < PREP_WARN_TIME * 1000)
       {
-        led_set(LEDC,COLOR_YELLOW,COLOR_RED,PREP_WARN_PRD*1000);
+        led_set(LEDC,COLOR_YELLOW,COLOR_RED,PREP_WARN_PRD*1000,PREP_WARN_PRD*1000);
       }
       else
       {
-        led_set(LEDC,COLOR_YELLOW,COLOR_YELLOW,0);
+        led_set(LEDC,COLOR_YELLOW,COLOR_YELLOW,0,0);
       }
     }
   }
@@ -869,9 +870,9 @@ function match_start()
   cancel_timeB();
   start_time(MATCH_START_TIME * 1000);
   sys_match_state = SYS_MATCH_START;
-  led_set(LEDA,COLOR_RED,COLOR_WHITE,1000);
-  led_set(LEDB,COLOR_RED,COLOR_WHITE,1000);
-  led_set(LEDC,COLOR_RED,COLOR_WHITE,1000);
+  led_set(LEDA,COLOR_RED,COLOR_WHITE,1000,1000);
+  led_set(LEDB,COLOR_RED,COLOR_WHITE,1000,1000);
+  led_set(LEDC,COLOR_RED,COLOR_WHITE,1000,1000);
 }
 
 function match_run()
@@ -883,38 +884,38 @@ function match_run()
       sys_match_state = SYS_MATCH_RUN;
       sys_next_state = SYS_STATE_PREP;
       start_time(MATCH_TIME * 60000);
-      led_set(LEDA,COLOR_WHITE,COLOR_WHITE,0);
-      led_set(LEDB,COLOR_WHITE,COLOR_WHITE,0);
-      led_set(LEDC,COLOR_WHITE,COLOR_WHITE,0);
+      led_set(LEDA,COLOR_WHITE,COLOR_WHITE,0,0);
+      led_set(LEDB,COLOR_WHITE,COLOR_WHITE,0,0);
+      led_set(LEDC,COLOR_WHITE,COLOR_WHITE,0,0);
     }
     else
     {
       if (sys_right_door_open)
       {
-        led_set(LEDA,COLOR_PURPLE,COLOR_RED,500);
+        led_set(LEDA,COLOR_PURPLE,COLOR_RED,500,500);
       }
       else
       {
-        led_set(LEDA,COLOR_WHITE,COLOR_WHITE,0);
+        led_set(LEDA,COLOR_WHITE,COLOR_WHITE,0,0);
       }
 
       if (sys_left_door_open)
       {
-        led_set(LEDB,COLOR_PURPLE,COLOR_RED,500);
+        led_set(LEDB,COLOR_PURPLE,COLOR_RED,500,500);
       }
       else
       {
-        led_set(LEDB,COLOR_WHITE,COLOR_WHITE,0);
+        led_set(LEDB,COLOR_WHITE,COLOR_WHITE,0,0);
       }
 
       if (sys_right_door_open || sys_left_door_open)
       {
-        led_set(LEDC,COLOR_RED,COLOR_RED,0);
+        led_set(LEDC,COLOR_RED,COLOR_RED,0,0);
         pause_time();
       }
       else
       {
-        led_set(LEDC,COLOR_WHITE,COLOR_WHITE,0);
+        led_set(LEDC,COLOR_WHITE,COLOR_WHITE,0,0);
       }
     }
   }
@@ -922,9 +923,9 @@ function match_run()
   {
     if (check_time() == true || check_timeA() == true || check_timeB() == true)
     {
-      led_set(LEDA,COLOR_RED,COLOR_RED,0);
-      led_set(LEDB,COLOR_RED,COLOR_RED,0);
-      led_set(LEDC,COLOR_RED,COLOR_RED,0);
+      led_set(LEDA,COLOR_RED,COLOR_RED,0,0);
+      led_set(LEDB,COLOR_RED,COLOR_RED,0,0);
+      led_set(LEDC,COLOR_RED,COLOR_RED,0,0);
       sys_match_state = SYS_MATCH_END;
       sys_next_state = SYS_STATE_PREP;
     }
@@ -932,33 +933,33 @@ function match_run()
     {
       if (sys_right_door_open)
       {
-        led_set(LEDA,COLOR_PURPLE,COLOR_RED,500);
+        led_set(LEDA,COLOR_PURPLE,COLOR_RED,500,500);
       }
       else if (sys_timer_enabledA)
       {
-        led_set(LEDA,COLOR_GREEN,COLOR_BLUE,1000);
+        led_set(LEDA,COLOR_GREEN,COLOR_BLUE,1000,1000);
       }
       else
       {
-        led_set(LEDA,COLOR_WHITE,COLOR_WHITE,0);
+        led_set(LEDA,COLOR_WHITE,COLOR_WHITE,0,0);
       }
 
       if (sys_left_door_open)
       {
-        led_set(LEDB,COLOR_PURPLE,COLOR_RED,500);
+        led_set(LEDB,COLOR_PURPLE,COLOR_RED,500,500);
       }
       else if (sys_timer_enabledB)
       {
-        led_set(LEDB,COLOR_GREEN,COLOR_BLUE,1000);
+        led_set(LEDB,COLOR_GREEN,COLOR_BLUE,1000,1000);
       }
       else
       {
-        led_set(LEDB,COLOR_WHITE,COLOR_WHITE,0);
+        led_set(LEDB,COLOR_WHITE,COLOR_WHITE,0,0);
       }
 
       if (sys_right_door_open || sys_left_door_open)
       {
-        led_set(LEDC,COLOR_RED,COLOR_RED,0);
+        led_set(LEDC,COLOR_RED,COLOR_RED,0,0);
         pause_time();
         cancel_timeA();
         cancel_timeB();
@@ -972,7 +973,7 @@ function match_run()
             sys_weapons_on = true;
           }
         }
-        led_set(LEDC,COLOR_WHITE,COLOR_WHITE,0);
+        led_set(LEDC,COLOR_WHITE,COLOR_WHITE,0,0);
       }
     }
   }
