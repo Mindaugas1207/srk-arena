@@ -1,4 +1,5 @@
 var http = require('http');
+var https = require('https');
 const querystring = require('querystring');
 var url = require('url');
 var fs = require('fs');
@@ -1001,7 +1002,7 @@ function input_update_states()
 }
 
 function api_getMatches(){
-  http.get('http://'+api_user+':'+api_key+'@api.challonge.com/v1/tournaments/'+api_tournament+'/matches.json', res => {
+  https.get('https://'+api_user+':'+api_key+'@api.challonge.com/v1/tournaments/'+api_tournament+'/matches.json', res => {
     let data = [];
     const headerDate = res.headers && res.headers.date ? res.headers.date : 'no response date';
     console.log('Status Code:', res.statusCode);
