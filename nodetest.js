@@ -163,7 +163,7 @@ function led_set(ledN, clrOn, clrOff, BlinkPeriod_on, BlinkPeriod_off) {
 
   if (ledOnClr[ledN] == clrOn && ledOffClr[ledN] == clrOff && ledBlinkPeriod_on[ledN] == BlinkPeriod_on && ledBlinkPeriod_off[ledN] == BlinkPeriod_off)
     return
-  var str = "SET:LED" + (ledN + 1).toString() + "(" + clrOn + ";" + clrOff + ";" + BlinkPeriod_on.toString() + ',' + BlinkPeriod_off.toString() + ")\n";
+  var str = "SET:LED" + (ledN + 1).toString() + "(" + clrOn + ";" + clrOff + ";" + BlinkPeriod_on.toString() + ';' + BlinkPeriod_off.toString() + ")\n";
   sprint(str);
 }
 
