@@ -595,7 +595,7 @@ function sys_run()
   }
   else if (sys_state === SYS_STATE_IDLE)
   {
-
+    led_set(LEDA,COLOR_YELLOW,COLOR_YELLOW,0,0);
   }
   else if (sys_state === SYS_STATE_DEMO)
   {
