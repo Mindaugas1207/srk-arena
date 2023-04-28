@@ -113,6 +113,8 @@ function getValue(){
       document.getElementById("PNTA").innerHTML = SYSTEM_DATA.PNTA.toString();
       document.getElementById("PNTB").innerHTML = SYSTEM_DATA.PNTB.toString();
       document.getElementById("SYS_STATE").innerHTML = SYSTEM_DATA.SYS.toString();
+      document.getElementById("TIMEA").innerHTML = SYSTEM_DATA.SECA.toString();
+      document.getElementById("TIMEB").innerHTML = SYSTEM_DATA.SECB.toString();
       setTimeout(getValue, 250);
 		}
 	};
@@ -186,6 +188,7 @@ getValue();
 <p id = "TIME" style = "font-size: 80px; font-family: 'Lucida Console', 'Courier New', monospace; text-align: center; letter-spacing: 10px;">00:00</p>
 </div>
 <div class="row">
+  <p id = "TIMEA" style = "font-family: 'Lucida Console', 'Courier New', monospace; text-align: center;">00</p>
   <div class="column left" style='text-align:left'>
     <button class="btn" id = "COMPA" style = "min-width: 150px;" onclick="call_buttonA()">A</button>
     <div class="dropdown">
@@ -198,6 +201,7 @@ getValue();
       </div>
     </div>
   </div>
+  <p id = "TIMEB" style = "font-family: 'Lucida Console', 'Courier New', monospace; text-align: center;">00</p>
   <div class="column right" style='text-align:center'>
     <button class="btn" id = "COMPB" style = "min-width: 150px;" onclick="call_buttonB()">B</button>
     <div class="dropdown">

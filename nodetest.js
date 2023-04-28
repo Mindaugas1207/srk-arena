@@ -438,7 +438,7 @@ http.createServer(function (req, res) {
     }
     else if (q.pathname == "/reset")
     {
-      reset_time();
+      sys_sw_state_restart();
       res.writeHead(200);
       return res.end();
     }
@@ -677,6 +677,27 @@ function sys_sw_state(st)
     match_start();
   }
   sys_state = st;
+  sys_next_state = sys_state;
+  sys_weapons_on = false;
+}
+
+function sys_sw_state_restart()
+{
+
+  
+
+  if (sys_state === SYS_STATE_ARRIVAL)
+  {
+    arrival_start();
+  }
+  else if (sys_state === SYS_STATE_PREP)
+  {
+    prep_start();
+  }
+  else if (sys_state === SYS_STATE_MATCH)
+  {
+    match_start();
+  }
   sys_next_state = sys_state;
   sys_weapons_on = false;
 }
