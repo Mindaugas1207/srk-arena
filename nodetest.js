@@ -1083,12 +1083,7 @@ function api_setMatchInactive(match_num){
   };
 
   var req = https.request(options, (res) => {
-    console.log('statusCode:', res.statusCode);
-    console.log('headers:', res.headers);
-
-    res.on('data', (d) => {
-      process.stdout.write(d);
-    });
+    console.log('Set Inactive code:', res.statusCode);
   });
 
   req.on('error', (e) => {
@@ -1097,9 +1092,6 @@ function api_setMatchInactive(match_num){
 
   req.write(postData);
   req.end();
-	//var xh = new XMLHttpRequest();
-	//xh.open("POST", "https://api.challonge.com/v1/tournaments/"+api_tournament+"/matches/"+api_matches[match_num].match.id+"/unmark_as_underway.json", true, api_user, api_key);
-	//xh.send(null);
 }
 
 function api_setMatchActive(match_num){
@@ -1115,11 +1107,11 @@ function api_setMatchActive(match_num){
   };
 
   var req = https.request(options, (res) => {
-    console.log('statusCode:', res.statusCode);
-    console.log('headers:', res.headers);
+    console.log('Set Active code:', res.statusCode);
 
-    res.on('data', (d) => {
-      process.stdout.write(d);
+    res.on('end', () => {
+      api_match_active = true;
+      api_current_match = api_next_match;
     });
   });
 
@@ -1129,15 +1121,6 @@ function api_setMatchActive(match_num){
 
   req.write(postData);
   req.end();
-	// var xh = new XMLHttpRequest();
-	// xh.onreadystatechange = function(){
-	// 	if (xh.readyState === XMLHttpRequest.DONE && xh.status === 200){
-  //     api_match_active = true;
-  //     api_current_match = api_next_match;
-	// 	}
-	// };
-	// xh.open("POST ", "https://api.challonge.com/v1/tournaments/"+api_tournament+"/matches/"+api_matches[match_num].match.id+"/mark_as_underway.json", true, api_user, api_key);
-	// xh.send(null);
 }
 
 function api_startMatch(match_num)
