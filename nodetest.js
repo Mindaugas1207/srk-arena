@@ -1110,14 +1110,10 @@ function api_setMatchActive(match_num){
   });
 
   var options = {
-    hostname: api_user+':'+api_key+'@api.challonge.com',
+    hostname: 'api.challonge.com',
     port: 443,
     path: '/v1/tournaments/'+api_tournament+'/matches/'+api_matches[match_num].match.id+'/mark_as_underway.json',
     method: 'POST',
-    headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Content-Length': postData.length
-      }
   };
 
   var req = https.request(options, (res) => {
