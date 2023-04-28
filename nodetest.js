@@ -147,6 +147,7 @@ var api_participantB_ok = false;
 
 function sprint(str) {
     port.write(str, function(err) {
+      console.log('Write:', str)
       if (err) {
         return console.log('ERROR:write:', err.message)
       }
