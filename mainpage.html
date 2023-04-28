@@ -113,7 +113,7 @@ function getValue(){
       document.getElementById("PNTA").innerHTML = SYSTEM_DATA.PNTA.toString();
       document.getElementById("PNTB").innerHTML = SYSTEM_DATA.PNTB.toString();
       document.getElementById("SYS_STATE").innerHTML = SYSTEM_DATA.SYS.toString();
-      setTimeout(getValue, 500);
+      setTimeout(getValue, 250);
 		}
 	};
 	xh.open("GET", "/data", true);

@@ -485,7 +485,7 @@ function sys_start()
   sys_start_state = SYS_START_PENDING;
   sprint("SYSTEM_START()\n");
   console.log('SRV:', "SYS_START_PENDING");
-  sys_interval = setInterval(sys_run, 500);
+  sys_interval = setInterval(sys_run, 100);
 }
 
 function start_time(period)
