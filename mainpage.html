@@ -107,11 +107,11 @@ function getValue(){
 	xh.onreadystatechange = function(){
 		if (xh.readyState === XMLHttpRequest.DONE && xh.status === 200){
       SYSTEM_DATA = JSON.parse(xh.responseText);
-      document.getElementById("TIME").innerHTML = res.MIN.toString() + ":" + res.SEC.toString();
-      document.getElementById("COMPA").innerHTML = res.COMPA.toString();
-      document.getElementById("COMPA").innerHTML = res.COMPA.toString();
-      document.getElementById("CNTA").innerHTML = res.PNTA.toString();
-      document.getElementById("CNTB").innerHTML = res.PNTB.toString();
+      document.getElementById("TIME").innerHTML = SYSTEM_DATA.MIN.toString() + ":" + SYSTEM_DATA.SEC.toString();
+      document.getElementById("COMPA").innerHTML = SYSTEM_DATA.COMPA.toString();
+      document.getElementById("COMPA").innerHTML = SYSTEM_DATA.COMPA.toString();
+      document.getElementById("CNTA").innerHTML = SYSTEM_DATA.PNTA.toString();
+      document.getElementById("CNTB").innerHTML = SYSTEM_DATA.PNTB.toString();
       setTimeout(getValue, 500);
 		}
 	};
