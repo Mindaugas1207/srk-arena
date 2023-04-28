@@ -1019,13 +1019,23 @@ function match_run()
   }
   else if (sys_match_state === SYS_MATCH_RUN)
   {
-    if (check_time() == true || check_timeA() == true || check_timeB() == true)
+    
+    if (check_time() == true)
     {
       led_set(LEDA,COLOR_RED,COLOR_RED,0,0);
       led_set(LEDB,COLOR_RED,COLOR_RED,0,0);
       led_set(LEDC,COLOR_RED,COLOR_RED,0,0);
       sys_match_state = SYS_MATCH_END;
       sys_next_state = SYS_STATE_PREP;
+    }
+    else if (check_timeA() == true || check_timeB() == true)
+    {
+      pause_time();
+      cancel_timeA();
+      cancel_timeB();
+      led_set(LEDA,COLOR_RED,COLOR_RED,0,0);
+      led_set(LEDB,COLOR_RED,COLOR_RED,0,0);
+      led_set(LEDC,COLOR_RED,COLOR_RED,0,0);
     }
     else
     {
