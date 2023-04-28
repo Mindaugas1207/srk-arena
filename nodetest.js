@@ -1,4 +1,4 @@
-var https = require('https');
+var http = require('http');
 const querystring = require('querystring');
 var url = require('url');
 var fs = require('fs');
@@ -214,7 +214,7 @@ port.on('readable', function () {
   }
 })
 
-https.createServer(function (req, res) {
+http.createServer(function (req, res) {
     var q = url.parse(req.url, true);
     if (q.pathname == "/data")
     {
@@ -1015,7 +1015,7 @@ function api_getMatches(){
     }
   };
   
-  const req = https.request(options, (res) => {
+  const req = http.request(options, (res) => {
     console.log(`statusCode: ${res.statusCode}`);
     res.on('data', (d) => {
       process.stdout.write(d);
