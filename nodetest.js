@@ -1004,75 +1004,50 @@ function input_update_states()
 function api_getMatches(){
   https.get('https://'+api_user+':'+api_key+'@api.challonge.com/v1/tournaments/'+api_tournament+'/matches.json', res => {
     let data = [];
-    const headerDate = res.headers && res.headers.date ? res.headers.date : 'no response date';
-    console.log('Status Code:', res.statusCode);
-    console.log('Date in Response header:', headerDate);
+    console.log('Get Matches code: ', res.statusCode);
   
     res.on('data', chunk => {
       data.push(chunk);
     });
   
     res.on('end', () => {
-      console.log('Response ended: ');
-      const users = JSON.parse(Buffer.concat(data).toString());
-      console.log(users);
+      api_matches = JSON.parse(Buffer.concat(data).toString());
+      api_matches_ok = true;
+      console.log('Get Matches: ', api_matches);
+      if (api_next_match != api_current_match)
+      {
+        api_match_active = false;
+        api_setMatchInactive(api_current_match);
+      }
+
+      api_setMatchActive(api_next_match);
+
+      api_getParticipantA(api_next_match);
+      api_getParticipantB(api_next_match);
     });
   }).on('error', err => {
-    console.log('Error: ', err.message);
+    console.log('Get Matches Error: ', err.message);
   });
-
-  // const postData = querystring.stringify({
-  // });
-  
-  // const options = {
-  //   hostname: 'https://'+api_user+':'+api_key+'@api.challonge.com',
-  //   port: 443,
-  //   path: '/v1/tournaments/"+api_tournament+"/matches.json',
-  //   method: 'GET',
-  //   headers: {
-  //     'Content-Type': 'application/x-www-form-urlencoded',
-  //     'Content-Length': postData.length
-  //   }
-  // };
-  
-  // const req = http.request(options, (res) => {
-  //   console.log(`statusCode: ${res.statusCode}`);
-  //   res.on('data', (d) => {
-  //     process.stdout.write(d);
-  //   });
-  // });
-  
-  // req.on('error', (error) => {
-  //   console.error(error);
-  // });
-  
-  // req.write(postData);
-  // req.end();
-
-	// var xh = new XMLHttpRequest();
-	// xh.onreadystatechange = function(){
-	// 	if (xh.readyState === XMLHttpRequest.DONE && xh.status === 200){
-  //     api_matches = JSON.parse(xh.responseText);
-  //     api_matches_ok = true;
-
-  //     if (api_next_match != api_current_match)
-  //     {
-  //       api_match_active = false;
-  //       api_setMatchInactive(api_current_match);
-  //     }
-
-  //     api_setMatchActive(api_next_match);
-
-  //     api_getParticipantA(api_next_match);
-  //     api_getParticipantB(api_next_match);
-	// 	}
-	// };
-  
-	// xh.open("GET", "https://api.challonge.com/v1/tournaments/"+api_tournament+"/matches.json", true, api_user, api_key);
-	// xh.send(null);
 }
 
 function api_getParticipantA(match_num){
+  https.get('https://'+api_user+':'+api_key+'@api.challonge.com/v1/tournaments/'+api_tournament+'/participants/'+api_matches[match_num].match.player1_id+'.json', res => {
+    let data = [];
+    console.log('Get PartA code: ', res.statusCode);
+  
+    res.on('data', chunk => {
+      data.push(chunk);
+    });
+  
+    res.on('end', () => {
+      res = JSON.parse(Buffer.concat(data).toString());
+      console.log('Get PartA: ', res);
+      sys_compA_name = res.participant.name;
+      api_participantA_ok = true;
+    });
+  }).on('error', err => {
+    console.log('Get PartA Error: ', err.message);
+  });
 	var xh = new XMLHttpRequest();
 	xh.onreadystatechange = function(){
 		if (xh.readyState === XMLHttpRequest.DONE && xh.status === 200){
@@ -1081,51 +1056,56 @@ function api_getParticipantA(match_num){
       api_participantA_ok = true;
 		}
 	};
-  
-	xh.open("GET", "https://api.challonge.com/v1/tournaments/"+api_tournament+"/participants/"+api_matches[match_num].match.player1_id+".json", true, api_user, api_key);
-	xh.send(null);
 }
 
 function api_getParticipantB(match_num){
-	var xh = new XMLHttpRequest();
-	xh.onreadystatechange = function(){
-		if (xh.readyState === XMLHttpRequest.DONE && xh.status === 200){
-      var res = JSON.parse(xh.responseText);
+  https.get('https://'+api_user+':'+api_key+'@api.challonge.com/v1/tournaments/'+api_tournament+'/participants/'+api_matches[match_num].match.player2_id+'.json', res => {
+    let data = [];
+    console.log('Get PartB code: ', res.statusCode);
+  
+    res.on('data', chunk => {
+      data.push(chunk);
+    });
+  
+    res.on('end', () => {
+      res = JSON.parse(Buffer.concat(data).toString());
+      console.log('Get PartB: ', res);
       sys_compB_name = res.participant.name;
       api_participantB_ok = true;
-		}
-	};
-  
-	xh.open("GET", "https://api.challonge.com/v1/tournaments/"+api_tournament+"/participants/"+api_matches[match_num].match.player2_id+".json", true, api_user, api_key);
-	xh.send(null);
+    });
+  }).on('error', err => {
+    console.log('Get PartB Error: ', err.message);
+  });
 }
 
 function api_setMatchInactive(match_num){
-  const postData = querystring.stringify({
+  var postData = JSON.stringify({
   });
-  
-  const options = {
-    hostname: 'https://api.challonge.com',
+
+  var options = {
+    hostname: 'https://'+api_user+':'+api_key+'@api.challonge.com',
     port: 443,
-    path: '/v1/tournaments/"+api_tournament+"/matches/"+api_matches[match_num].match.id+"/unmark_as_underway.json',
+    path: '/v1/tournaments/'+api_tournament+'/matches/'+api_matches[match_num].match.id+'/unmark_as_underway.json',
     method: 'POST',
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'Content-Length': postData.length
-    }
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Length': postData.length
+      }
   };
-  
-  const req = https.request(options, (res) => {
-    console.log(`statusCode: ${res.statusCode}`);
+
+  var req = https.request(options, (res) => {
+    console.log('statusCode:', res.statusCode);
+    console.log('headers:', res.headers);
+
     res.on('data', (d) => {
       process.stdout.write(d);
     });
   });
-  
-  req.on('error', (error) => {
-    console.error(error);
+
+  req.on('error', (e) => {
+    console.error(e);
   });
-  
+
   req.write(postData);
   req.end();
 	//var xh = new XMLHttpRequest();
@@ -1134,15 +1114,44 @@ function api_setMatchInactive(match_num){
 }
 
 function api_setMatchActive(match_num){
-	var xh = new XMLHttpRequest();
-	xh.onreadystatechange = function(){
-		if (xh.readyState === XMLHttpRequest.DONE && xh.status === 200){
-      api_match_active = true;
-      api_current_match = api_next_match;
-		}
-	};
-	xh.open("POST ", "https://api.challonge.com/v1/tournaments/"+api_tournament+"/matches/"+api_matches[match_num].match.id+"/mark_as_underway.json", true, api_user, api_key);
-	xh.send(null);
+  var postData = JSON.stringify({
+  });
+
+  var options = {
+    hostname: 'https://'+api_user+':'+api_key+'@api.challonge.com',
+    port: 443,
+    path: '/v1/tournaments/'+api_tournament+'/matches/'+api_matches[match_num].match.id+'/mark_as_underway.json',
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Length': postData.length
+      }
+  };
+
+  var req = https.request(options, (res) => {
+    console.log('statusCode:', res.statusCode);
+    console.log('headers:', res.headers);
+
+    res.on('data', (d) => {
+      process.stdout.write(d);
+    });
+  });
+
+  req.on('error', (e) => {
+    console.error(e);
+  });
+
+  req.write(postData);
+  req.end();
+	// var xh = new XMLHttpRequest();
+	// xh.onreadystatechange = function(){
+	// 	if (xh.readyState === XMLHttpRequest.DONE && xh.status === 200){
+  //     api_match_active = true;
+  //     api_current_match = api_next_match;
+	// 	}
+	// };
+	// xh.open("POST ", "https://api.challonge.com/v1/tournaments/"+api_tournament+"/matches/"+api_matches[match_num].match.id+"/mark_as_underway.json", true, api_user, api_key);
+	// xh.send(null);
 }
 
 function api_startMatch(match_num)
