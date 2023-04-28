@@ -1075,7 +1075,7 @@ function api_setMatchInactive(match_num){
   });
 
   var options = {
-    hostname: 'https://'+api_user+':'+api_key+'@api.challonge.com',
+    hostname: api_user+':'+api_key+'@api.challonge.com',
     port: 443,
     path: '/v1/tournaments/'+api_tournament+'/matches/'+api_matches[match_num].match.id+'/unmark_as_underway.json',
     method: 'POST',
@@ -1110,7 +1110,7 @@ function api_setMatchActive(match_num){
   });
 
   var options = {
-    hostname: 'https://'+api_user+':'+api_key+'@api.challonge.com',
+    hostname: api_user+':'+api_key+'@api.challonge.com',
     port: 443,
     path: '/v1/tournaments/'+api_tournament+'/matches/'+api_matches[match_num].match.id+'/mark_as_underway.json',
     method: 'POST',
