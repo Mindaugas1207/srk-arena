@@ -571,8 +571,7 @@ function sys_run()
   {
     if (sys_start_state === SYS_START_OK)
     {
-      sys_state === SYS_STATE_IDLE;
-      console.log("if", sys_state, sys_start_state);
+      sys_state = SYS_STATE_IDLE;
     }
   }
   else if (sys_state === SYS_STATE_ARRIVAL)
