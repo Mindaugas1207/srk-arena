@@ -121,6 +121,9 @@ var sys_compB_arrived = false;
 var sys_compA_ready = false;
 var sys_compB_ready = false;
 
+var sys_compA_pnts_round = 0;
+var sys_compB_pnts_round = 0;
+
 const SYS_STATE_INIT = 0;
 const SYS_STATE_START = 1;
 const SYS_STATE_ARRIVAL = 2;
@@ -776,6 +779,35 @@ function arrival_run()
       }
     }
   }
+  else if (sys_arrival_state === SYS_ARRIVAL_END)
+  {
+    if (sys_compA_arrived)
+    {
+      led_set(LEDA,COLOR_GREEN,COLOR_GREEN,0,0);
+    }
+    else
+    {
+      led_set(LEDA,COLOR_RED,COLOR_RED,0,0);
+    }
+
+    if (sys_compB_arrived)
+    {
+      led_set(LEDB,COLOR_GREEN,COLOR_GREEN,0,0);
+    }
+    else
+    {
+      led_set(LEDB,COLOR_RED,COLOR_RED,0,0);
+    }
+    if (sys_compA_arrived && sys_compB_arrived)
+    {
+      sys_next_state = SYS_STATE_PREP;
+      led_set(LEDC,COLOR_GREEN,COLOR_GREEN,0,0);
+    }
+    else
+    {
+      led_set(LEDC,COLOR_RED,COLOR_RED,0,0);
+    }
+  }
 }
 
 function prep_start()
@@ -872,6 +904,35 @@ function prep_run()
       }
     }
   }
+  else if (sys_prep_state === SYS_PREP_END)
+  {
+    if (sys_compA_ready)
+    {
+      led_set(LEDA,COLOR_GREEN,COLOR_GREEN,0,0);
+    }
+    else
+    {
+      led_set(LEDA,COLOR_RED,COLOR_RED,0,0);
+    }
+
+    if (sys_compB_ready)
+    {
+      led_set(LEDB,COLOR_GREEN,COLOR_GREEN,0,0);
+    }
+    else
+    {
+      led_set(LEDB,COLOR_RED,COLOR_RED,0,0);
+    }
+    if (sys_compA_ready && sys_compB_ready)
+    {
+      sys_next_state = SYS_STATE_MATCH;
+      led_set(LEDC,COLOR_GREEN,COLOR_GREEN,0,0);
+    }
+    else
+    {
+      led_set(LEDC,COLOR_RED,COLOR_RED,0,0);
+    }
+  }
 }
 
 function match_start()
@@ -880,6 +941,8 @@ function match_start()
   cancel_timeB();
   start_time(MATCH_START_TIME * 1000);
   sys_match_state = SYS_MATCH_START;
+  sys_compA_pnts_round = 0;
+  sys_compB_pnts_round = 0;
   led_set(LEDA,COLOR_RED,COLOR_WHITE,1000,1000);
   led_set(LEDB,COLOR_RED,COLOR_WHITE,1000,1000);
   led_set(LEDC,COLOR_RED,COLOR_WHITE,1000,1000);
@@ -989,6 +1052,24 @@ function match_run()
           led_set(LEDC,COLOR_RED,COLOR_WHITE,250,250);
         }
       }
+    }
+  }
+  else if (sys_match_state === SYS_MATCH_END)
+  {
+    if (sys_compA_pnts_round > sys_compB_pnts_round)
+    {
+      led_set(LEDA,COLOR_GREEN,COLOR_GREEN,0,0);
+      led_set(LEDB,COLOR_RED,COLOR_RED,0,0);
+    }
+    else if (sys_compA_pnts_round < sys_compB_pnts_round)
+    {
+      led_set(LEDB,COLOR_GREEN,COLOR_GREEN,0,0);
+      led_set(LEDA,COLOR_RED,COLOR_RED,0,0);
+    }
+    else if (sys_compA_pnts_round == 1 && sys_compB_pnts_round == 1)
+    {
+      led_set(LEDA,COLOR_BLUE,COLOR_BLUE,0,0);
+      led_set(LEDB,COLOR_BLUE,COLOR_BLUE,0,0);
     }
   }
 }
