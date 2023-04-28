@@ -1029,27 +1029,27 @@ function api_getMatches(){
   req.write(postData);
   req.end();
 
-	var xh = new XMLHttpRequest();
-	xh.onreadystatechange = function(){
-		if (xh.readyState === XMLHttpRequest.DONE && xh.status === 200){
-      api_matches = JSON.parse(xh.responseText);
-      api_matches_ok = true;
+	// var xh = new XMLHttpRequest();
+	// xh.onreadystatechange = function(){
+	// 	if (xh.readyState === XMLHttpRequest.DONE && xh.status === 200){
+  //     api_matches = JSON.parse(xh.responseText);
+  //     api_matches_ok = true;
 
-      if (api_next_match != api_current_match)
-      {
-        api_match_active = false;
-        api_setMatchInactive(api_current_match);
-      }
+  //     if (api_next_match != api_current_match)
+  //     {
+  //       api_match_active = false;
+  //       api_setMatchInactive(api_current_match);
+  //     }
 
-      api_setMatchActive(api_next_match);
+  //     api_setMatchActive(api_next_match);
 
-      api_getParticipantA(api_next_match);
-      api_getParticipantB(api_next_match);
-		}
-	};
+  //     api_getParticipantA(api_next_match);
+  //     api_getParticipantB(api_next_match);
+	// 	}
+	// };
   
-	xh.open("GET", "https://api.challonge.com/v1/tournaments/"+api_tournament+"/matches.json", true, api_user, api_key);
-	xh.send(null);
+	// xh.open("GET", "https://api.challonge.com/v1/tournaments/"+api_tournament+"/matches.json", true, api_user, api_key);
+	// xh.send(null);
 }
 
 function api_getParticipantA(match_num){
