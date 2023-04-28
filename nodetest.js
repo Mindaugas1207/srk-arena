@@ -12,9 +12,9 @@ const L_DOOR = 2;
 const R_SW = 3;
 const L_SW = 4;
 
-const LEDA = 0;
+const LEDA = 1;
 const LEDB = 2;
-const LEDC = 1;
+const LEDC = 0;
 
 const COLOR_RED = "FF,00,00";
 const COLOR_GREEN = "00,FF,00";
@@ -162,7 +162,7 @@ var ledBlinkPeriod_off = [0, 0, 0];
 function led_set(ledN, clrOn, clrOff, BlinkPeriod_on, BlinkPeriod_off) {
 
   if (ledOnClr[ledN] == clrOn && ledOffClr[ledN] == clrOff && ledBlinkPeriod_on[ledN] == BlinkPeriod_on && ledBlinkPeriod_off[ledN] == BlinkPeriod_off)
-    return
+    return;
   var str = "SET:LED" + (ledN + 1).toString() + "(" + clrOn + ";" + clrOff + ";" + BlinkPeriod_on.toString() + ';' + BlinkPeriod_off.toString() + ")\n";
   sprint(str);
 }
