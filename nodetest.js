@@ -1,4 +1,4 @@
-var http = require('http');
+var https = require('https');
 const querystring = require('querystring');
 var url = require('url');
 var fs = require('fs');
@@ -214,7 +214,7 @@ port.on('readable', function () {
   }
 })
 
-http.createServer(function (req, res) {
+https.createServer(function (req, res) {
     var q = url.parse(req.url, true);
     if (q.pathname == "/data")
     {
