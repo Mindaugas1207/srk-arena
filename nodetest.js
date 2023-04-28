@@ -610,7 +610,7 @@ function sys_run()
   if (sys_weapons_on == true && (sys_state === SYS_STATE_DEMO || sys_state === SYS_STATE_MATCH))
   {
     setRamp(sys_demo_allow_ramp);
-    setBlade(sys_demo_allow_ramp);
+    setBlade(sys_demo_allow_spin);
   }
   else
   {
