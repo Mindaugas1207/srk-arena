@@ -221,11 +221,15 @@ port.on('readable', function () {
   {
     //ok
   }
-  else
+  else if (newData.startsWith("FAIL"))
   {
     ledFail[LEDA] = true;
     ledFail[LEDB] = true;
     ledFail[LEDC] = true;
+  }
+  else
+  {
+    
     console.log('Data:', newData)
   }
 })
