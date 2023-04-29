@@ -154,7 +154,6 @@ function sprint(str) {
     port.write(str, function(err) {
       console.log('Write:', str)
       if (err) {
-        sprint(str);
         return console.log('ERROR:write:', err.message)
       }
     })
@@ -164,15 +163,17 @@ var ledOnClr = [COLOR_OFF, COLOR_OFF, COLOR_OFF];
 var ledOffClr = [COLOR_OFF, COLOR_OFF, COLOR_OFF];
 var ledBlinkPeriod_on = [0, 0, 0];
 var ledBlinkPeriod_off = [0, 0, 0];
+var ledFail = false;
 
 function led_set(ledN, clrOn, clrOff, BlinkPeriod_on, BlinkPeriod_off) {
 
-  if (ledOnClr[ledN] == clrOn && ledOffClr[ledN] == clrOff && ledBlinkPeriod_on[ledN] == BlinkPeriod_on && ledBlinkPeriod_off[ledN] == BlinkPeriod_off)
+  if (ledOnClr[ledN] == clrOn && ledOffClr[ledN] == clrOff && ledBlinkPeriod_on[ledN] == BlinkPeriod_on && ledBlinkPeriod_off[ledN] == BlinkPeriod_off && !ledFail)
     return;
   ledOnClr[ledN] = clrOn;
   ledOffClr[ledN] = clrOff;
   ledBlinkPeriod_on[ledN] = BlinkPeriod_on;
   ledBlinkPeriod_off[ledN] = BlinkPeriod_off;
+  ledFail = false;
   var str = "SET:LED" + (ledN + 1).toString() + "(" + clrOn + ";" + clrOff + ";" + BlinkPeriod_on.toString() + ';' + BlinkPeriod_off.toString() + ")\n";
   sprint(str);
 }
@@ -222,6 +223,7 @@ port.on('readable', function () {
   }
   else
   {
+    ledFail = true;
     console.log('Data:', newData)
   }
 })
@@ -1159,16 +1161,25 @@ function api_getMatches(){
       api_matches = JSON.parse(Buffer.concat(data).toString());
       api_matches_ok = true;
       console.log('Get Matches: ', api_matches);
-      if (api_next_match != api_current_match)
+      if (api_matches.length >= api_next_match + 1)
       {
-        api_match_active = false;
-        api_setMatchInactive(api_current_match);
+        if (api_next_match != api_current_match)
+        {
+          api_match_active = false;
+          api_setMatchInactive(api_current_match);
+        }
+
+        api_setMatchActive(api_next_match);
+
+        api_getParticipantA(api_next_match);
+        api_getParticipantB(api_next_match);
       }
-
-      api_setMatchActive(api_next_match);
-
-      api_getParticipantA(api_next_match);
-      api_getParticipantB(api_next_match);
+      else
+      {
+        sys_compA_name = "ERR";
+        sys_compB_name = "ERR";
+      }
+      
     });
   }).on('error', err => {
     console.log('Get Matches Error: ', err.message);
