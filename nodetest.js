@@ -154,6 +154,7 @@ function sprint(str) {
     port.write(str, function(err) {
       console.log('Write:', str)
       if (err) {
+        sprint(str);
         return console.log('ERROR:write:', err.message)
       }
     })
