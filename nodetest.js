@@ -672,7 +672,7 @@ function setBlade(enbl)
   bld_en = enbl;
   if (enbl)
   {
-    blade_set(240000,false,true,15000);
+    blade_set(240000,false,true,5000);
   }
   else
   {
@@ -993,6 +993,7 @@ function match_start()
   sys_match_state = SYS_MATCH_START;
   sys_compA_pnts_round = 0;
   sys_compB_pnts_round = 0;
+  sys_weapons_on = false;
   led_set(LEDA,COLOR_RED,COLOR_WHITE,1000,1000);
   led_set(LEDB,COLOR_RED,COLOR_WHITE,1000,1000);
   led_set(LEDC,COLOR_RED,COLOR_WHITE,1000,1000);
@@ -1116,6 +1117,7 @@ function match_run()
   }
   else if (sys_match_state === SYS_MATCH_END)
   {
+    sys_weapons_on = false;
     if (sys_compA_pnts_round > sys_compB_pnts_round)
     {
       led_set(LEDA,COLOR_GREEN,COLOR_GREEN,0,0);
