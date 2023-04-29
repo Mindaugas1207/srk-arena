@@ -65,10 +65,6 @@
 .btn:hover, .dropdown:hover .btn {
   background-color: #0b7dda;
 }
-body {
-   transform: scale(0.7);
-   transform-origin: 0 0;
-}
 </style>
 <script>
 
@@ -338,54 +334,54 @@ getValue();
 <div>
 <center>
 <div>
-<button id = "TIME" onclick="postf('timbutton')" style = "font-size: 320px; font-family: 'Lucida Console', 'Courier New', monospace; text-align: center; letter-spacing: 10px;">00:00</button>
+<button id = "TIME" onclick="postf('timbutton')" style = "font-size: 300px; font-family: 'Lucida Console', 'Courier New', monospace; text-align: center; letter-spacing: 10px;">00:00</button>
 </div>
 <div>
 </div>
-<p style = "font-size: 50px;"> </p>
+<p style = "font-size: 60px;"> </p>
 </center>
 </div>
 <div class="row">
   <div class="column left" style='text-align:left'>
-    <button class="btn" id = "COMPA" style = "min-width: 450px;" onclick="call_buttonA()">Saldainių furgoniukas</button>
+    <button class="btn" id = "COMPA" style = "min-width: 440px;" onclick="call_buttonA()">Saldainių furgoniukas</button>
     <div class="dropdown">
       <button class="btn" id = "PNTA" style="border-left:1px solid #0d8bf2; min-width: 60px;">
       0
       </button>
       <div class="dropdown-content">
-        <a href="#" style = "font-size: 40px;" onclick="postf('addA')">+</a>
-        <a href="#" style = "font-size: 40px;" onclick="postf('subA')">-</a>
+        <a href="#" style = "font-size: 30px;" onclick="postf('addA')">+</a>
+        <a href="#" style = "font-size: 30px;" onclick="postf('subA')">-</a>
       </div>
     </div>
     <div>
-      <button class="btn" id = "HA" style = "font-size: 20px; padding: 5px; min-width: 510px; background-color: #2196F3;">NE ATVYKO / NOT ARRIVED</button>
+      <button class="btn" id = "HA" style = "font-size: 20px; padding: 5px; min-width: 500px; background-color: #2196F3;">NE ATVYKO / NOT ARRIVED</button>
     </div>
     <div>
       <p style = "font-size: 50px;"> </p>
       <button onclick="postf('reset')" style = "font-size: 40px; min-width: 200px;">RESET</button>
-      <button onclick="postf('matchStart')" style = "font-size: 40px; min-width:305px;">START MATCH</button>
+      <button onclick="postf('matchStart')" style = "font-size: 40px; min-width:295px;">START MATCH</button>
       <button onclick="postf('stop')" style = "font-size: 40px;">STOP</button>
       <button onclick="postf('cancelResults')" style = "font-size: 40px;">RESULT CANCEL</button>
     </div>
   </div>
   <div class="column right" style='text-align:left'>
-    <button class="btn" id = "COMPB" style = "min-width: 450px;" onclick="call_buttonB()">Saldainių furgoniukas</button>
+    <button class="btn" id = "COMPB" style = "min-width: 440px;" onclick="call_buttonB()">Saldainių furgoniukas</button>
     <div class="dropdown">
       <button class="btn" id = "PNTB" style="border-left:1px solid #0d8bf2; min-width: 60px;">
       0
       </button>
       <div class="dropdown-content">
-        <a href="#" style = "font-size: 40px;" onclick="postf('addB')">+</a>
-        <a href="#" style = "font-size: 40px;" onclick="postf('subB')">-</a>
+        <a href="#" style = "font-size: 30px;" onclick="postf('addB')">+</a>
+        <a href="#" style = "font-size: 30px;" onclick="postf('subB')">-</a>
       </div>
     </div>
     <div>
-      <button class="btn" id = "HB" style = "font-size: 20px; padding: 5px; min-width: 510px; background-color: #2196F3;">NE ATVYKO / NOT ARRIVED</button>
+      <button class="btn" id = "HB" style = "font-size: 20px; padding: 5px; min-width: 500px; background-color: #2196F3;">NE ATVYKO / NOT ARRIVED</button>
     </div>
     <div>
       <p style = "font-size: 50px;"> </p>
       <button onclick="postf('matchEnd')" style = "font-size: 40px; min-width: 305px;">END MATCH</button>
-      <button onclick="postf('next')" style = "font-size: 40px; min-width: 200px;">NEXT</button>
+      <button onclick="postf('next')" style = "font-size: 40px; min-width: 190px;">NEXT</button>
       <button onclick="postf('confirmResults')" style = "font-size: 40px;">RESULT CONFIRM</button>
     </div>
   </div>
