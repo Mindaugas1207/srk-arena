@@ -739,8 +739,8 @@ function arrival_start()
 {
   start_time(ARRIVAL_TIME * 60000);
   sys_arrival_state = SYS_ARRIVAL_START;
-  sys_compA_arrived = true;
-  sys_compB_arrived = true;
+  sys_compA_arrived = false;
+  sys_compB_arrived = false;
   led_set(LEDA,COLOR_YELLOW,COLOR_YELLOW,0,0);
   led_set(LEDB,COLOR_YELLOW,COLOR_YELLOW,0,0);
   led_set(LEDC,COLOR_YELLOW,COLOR_YELLOW,0,0);
