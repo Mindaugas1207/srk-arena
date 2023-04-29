@@ -233,6 +233,7 @@ http.createServer(function (req, res) {
         "SYS": sys_state,
         "SEC": t_seconds,
         "MIN": t_minutes,
+        "PAUS": sys_timer_pause,
         "EM": sys_em_stop,
         "RD": sys_right_door,
         "LD": sys_left_door,

@@ -14,11 +14,11 @@
 }
 
 .left {
-  width: 50%;
+  width: 55%;
 }
 
 .right {
-  width: 50%;
+  width: 45%;
 }
 
 .row:after {
@@ -31,7 +31,7 @@
   background-color: #2196F3;
   color: white;
   padding: 16px;
-  font-size: 16px;
+  font-size: 40px;
   border: none;
   outline: none;
 }
@@ -81,6 +81,7 @@ var SYSTEM_DATA = {
         "SYS": SYS_STATE_INIT,
         "SEC": 0,
         "MIN": 0,
+        "PAUS": false,
         "EM": false,
         "RD": false,
         "LD": false,
@@ -107,14 +108,109 @@ function getValue(){
 	xh.onreadystatechange = function(){
 		if (xh.readyState === XMLHttpRequest.DONE && xh.status === 200){
       SYSTEM_DATA = JSON.parse(xh.responseText);
-      document.getElementById("TIME").innerHTML = SYSTEM_DATA.MIN.toString() + ":" + SYSTEM_DATA.SEC.toString();
-      document.getElementById("COMPA").innerHTML = SYSTEM_DATA.COMPA.toString();
-      document.getElementById("COMPB").innerHTML = SYSTEM_DATA.COMPB.toString();
+      document.getElementById("TIME").innerHTML = ((SYSTEM_DATA.MIN < 10) ? ("0" + SYSTEM_DATA.MIN.toString()) : SYSTEM_DATA.MIN.toString()) + ":" + ((SYSTEM_DATA.SEC < 10) ? ("0" + SYSTEM_DATA.SEC.toString()) : SYSTEM_DATA.SEC.toString());
+      var cA = document.getElementById("COMPA");
+      cA.innerHTML = SYSTEM_DATA.COMPA.toString();
+      var cB = document.getElementById("COMPB");
+      cB.innerHTML = SYSTEM_DATA.COMPB.toString();
       document.getElementById("PNTA").innerHTML = SYSTEM_DATA.PNTA.toString();
       document.getElementById("PNTB").innerHTML = SYSTEM_DATA.PNTB.toString();
       document.getElementById("SYS_STATE").innerHTML = SYSTEM_DATA.SYS.toString();
-      document.getElementById("TIMEA").innerHTML = SYSTEM_DATA.SECA.toString();
-      document.getElementById("TIMEB").innerHTML = SYSTEM_DATA.SECB.toString();
+
+      var hA = document.getElementById("HA");
+      var hB = document.getElementById("HB");
+
+      if (SYSTEM_DATA.SYS == SYS_STATE_ARRIVAL)
+      {
+        if (SYSTEM_DATA.ARVA)
+        {
+          cA.style.backgroundColor ="#00FF7F";
+          hA.style.backgroundColor ="#00FF7F";
+          hA.innerHTML = "ATVYKO / ARRIVED";
+        }
+        else
+        {
+          cA.style.backgroundColor ="#FF0000";
+          hA.style.backgroundColor ="#FF0000";
+          hA.innerHTML = "NE ATVYKO / NOT ARRIVED";
+        }
+        if (SYSTEM_DATA.ARVB)
+        {
+          cB.style.backgroundColor ="#00FF7F";
+          hB.style.backgroundColor ="#00FF7F";
+          hB.innerHTML = "ATVYKO / ARRIVED";
+        }
+        else
+        {
+          cB.style.backgroundColor ="#FF0000";
+          hB.style.backgroundColor ="#FF0000";
+          hB.innerHTML = "NE ATVYKO / NOT ARRIVED";
+        }
+      }
+      else if (SYSTEM_DATA.SYS == SYS_STATE_PREP)
+      {
+        if (SYSTEM_DATA.RDYA)
+        {
+          cA.style.backgroundColor ="#00FF7F";
+          hA.style.backgroundColor ="#00FF7F";
+          hA.innerHTML = "PASIRUOŠĘS / READY";
+        }
+        else
+        {
+          cA.style.backgroundColor ="#FF0000";
+          hA.style.backgroundColor ="#FF0000";
+          hA.innerHTML = "NE PASIRUOŠĘS / NOT READY";
+        }
+        if (SYSTEM_DATA.RDYB)
+        {
+          cB.style.backgroundColor ="#00FF7F";
+          hB.style.backgroundColor ="#00FF7F";
+          hB.innerHTML = "PASIRUOŠĘS / READY";
+        }
+        else
+        {
+          cB.style.backgroundColor ="#FF0000";
+          hB.style.backgroundColor ="#FF0000";
+          hB.innerHTML = "NE PASIRUOŠĘS / NOT READY";
+        }
+      }
+      else if (SYSTEM_DATA.SYS == SYS_STATE_MATCH)
+      {
+        if (SYSTEM_DATA.TIMA)
+        {
+          cA.style.backgroundColor ="#FF0000";
+          hA.style.backgroundColor ="#FF0000";
+          hA.innerHTML = "NE JUDA / NOT ACTIVE : " + SYSTEM_DATA.SECA.toString()+"s";
+        }
+        else
+        {
+          cA.style.backgroundColor ="#2196F3";
+          hA.style.backgroundColor ="#2196F3";
+          hA.innerHTML = "JUDA / ACTIVE";
+        }
+        if (SYSTEM_DATA.TIMB)
+        {
+          cB.style.backgroundColor ="#FF0000";
+          hB.style.backgroundColor ="#FF0000";
+          hB.innerHTML = "NE JUDA / NOT ACTIVE : " + SYSTEM_DATA.SECA.toString()+"s";
+        }
+        else
+        {
+          cB.style.backgroundColor ="#2196F3";
+          hB.style.backgroundColor ="#2196F3";
+          hB.innerHTML = "JUDA / ACTIVE";
+        }
+      }
+      else
+      {
+        cA.style.backgroundColor ="#2196F3";
+        cB.style.backgroundColor ="#2196F3";
+        hA.style.backgroundColor ="#2196F3";
+        hA.innerHTML = "";
+        hB.style.backgroundColor ="#2196F3";
+        hB.innerHTML = "";
+      }
+
       setTimeout(getValue, 250);
 		}
 	};
@@ -178,56 +274,85 @@ function call_buttonB()
   }
 }
 
+function timbutton()
+{
+  if(SYSTEM_DATA.PAUS)
+  {
+    postf('resume');
+  }
+  else
+  {
+    postf('pause');
+  }
+}
+
 getValue();
 
 </script>
 </head>
 <body>
 <div>
-<p id = "SYS_STATE">0</p>
-<p id = "TIME" style = "font-size: 80px; font-family: 'Lucida Console', 'Courier New', monospace; text-align: center; letter-spacing: 10px;">00:00</p>
+<center>
+<div>
+<button id = "TIME" onclick="postf('timbutton')" style = "font-size: 320px; font-family: 'Lucida Console', 'Courier New', monospace; text-align: center; letter-spacing: 10px;">00:00</button>
+</div>
+<div>
+</div>
+<p style = "font-size: 50px;"> </p>
+</center>
 </div>
 <div class="row">
-  <p id = "TIMEA" style = "font-family: 'Lucida Console', 'Courier New', monospace; text-align: center;">00</p>
   <div class="column left" style='text-align:left'>
-    <button class="btn" id = "COMPA" style = "min-width: 150px;" onclick="call_buttonA()">A</button>
+    <button class="btn" id = "COMPA" style = "min-width: 450px;" onclick="call_buttonA()">Saldainių furgoniukas</button>
     <div class="dropdown">
       <button class="btn" id = "PNTA" style="border-left:1px solid #0d8bf2; min-width: 60px;">
       0
       </button>
       <div class="dropdown-content">
-        <a href="#" onclick="postf('addA')">+</a>
-        <a href="#" onclick="postf('subA')">-</a>
+        <a href="#" style = "font-size: 40px;" onclick="postf('addA')">+</a>
+        <a href="#" style = "font-size: 40px;" onclick="postf('subA')">-</a>
       </div>
     </div>
+    <div>
+      <button class="btn" id = "HA" style = "font-size: 20px; padding: 5px; min-width: 510px; background-color: #2196F3;">NE ATVYKO / NOT ARRIVED</button>
+    </div>
+    <div>
+      <p style = "font-size: 50px;"> </p>
+      <button onclick="postf('reset')" style = "font-size: 40px; min-width: 200px;">RESET</button>
+      <button onclick="postf('matchStart')" style = "font-size: 40px; min-width:305px;">START MATCH</button>
+      <button onclick="postf('stop')" style = "font-size: 40px;">STOP</button>
+      <button onclick="postf('cancelResults')" style = "font-size: 40px;">RESULT CANCEL</button>
+    </div>
   </div>
-  <p id = "TIMEB" style = "font-family: 'Lucida Console', 'Courier New', monospace; text-align: center;">00</p>
-  <div class="column right" style='text-align:center'>
-    <button class="btn" id = "COMPB" style = "min-width: 150px;" onclick="call_buttonB()">B</button>
+  <div class="column right" style='text-align:left'>
+    <button class="btn" id = "COMPB" style = "min-width: 450px;" onclick="call_buttonB()">Saldainių furgoniukas</button>
     <div class="dropdown">
       <button class="btn" id = "PNTB" style="border-left:1px solid #0d8bf2; min-width: 60px;">
       0
       </button>
       <div class="dropdown-content">
-        <a href="#" onclick="postf('addB')">+</a>
-        <a href="#" onclick="postf('subB')">-</a>
+        <a href="#" style = "font-size: 40px;" onclick="postf('addB')">+</a>
+        <a href="#" style = "font-size: 40px;" onclick="postf('subB')">-</a>
       </div>
+    </div>
+    <div>
+      <button class="btn" id = "HB" style = "font-size: 20px; padding: 5px; min-width: 510px; background-color: #2196F3;">NE ATVYKO / NOT ARRIVED</button>
+    </div>
+    <div>
+      <p style = "font-size: 50px;"> </p>
+      <button onclick="postf('matchEnd')" style = "font-size: 40px; min-width: 305px;">END MATCH</button>
+      <button onclick="postf('next')" style = "font-size: 40px; min-width: 200px;">NEXT</button>
+      <button onclick="postf('confirmResults')" style = "font-size: 40px;">RESULT CONFIRM</button>
     </div>
   </div>
 </div>
-<button onclick="postf('demo')">DEMO</button>
-<button onclick="postf('matchStart')">START MATCH</button>
-<button onclick="postf('matchEnd')">END MATCH</button>
-<button onclick="postf('resetMatches')">RESET MATCHES</button>
-<button onclick="postf('pause')">PAUSE</button>
-<button onclick="postf('resume')">RESUME</button>
-<button onclick="postf('stop')">STOP</button>
-<button onclick="postf('reset')">RESET</button>
-<button onclick="postf('exit')">EXIT</button>
-<button onclick="postf('next')">NEXT</button>
-<button onclick="postf('weapons')">WEAPONS</button>
+<div></div>
+<p id = "SYS_STATE">0</p>
+<p style = "font-size: 20px;"> </p>
+<button onclick="postf('demo')" style = "font-size: 20px;">DEMO</button>
+<button onclick="postf('weapons')" style = "font-size: 20px;">WEAPONS</button>
+<button onclick="postf('exit')" style = "font-size: 20px;">EXIT</button>
+<button onclick="postf('resetMatches')" style = "font-size: 20px;">RESET MATCHES</button>
 
-<button onclick="postf('confirmResults')">RESULT CONFIRM</button>
-<button onclick="postf('cancelResults')">RESULT CANCEL</button>
 </body>
 </html>
