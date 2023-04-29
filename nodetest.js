@@ -29,6 +29,23 @@ const port = new SerialPort({
   path: '/dev/ttyUSB0',
   baudRate: 9600,
 });
+function open () {
+  port.open(function (err) {
+    if (!err)
+      return;
+    setTimeout(open, 5000); // next attempt to open after 10s
+  });
+}
+
+function reopen()
+{
+  port.close(function (err) {
+    console.log('port closed', err);
+    setTimeout(open, 5000);
+  });
+}
+
+
 
 var t_seconds = 0;
 var t_minutes = 0;
@@ -419,7 +436,7 @@ http.createServer(function (req, res) {
     }
     else if (q.pathname == "/weapons")
     {
-      sys_weapons_on = true;
+      sys_weapons_on = !sys_weapons_on;
       res.writeHead(200);
       return res.end();
     }
@@ -454,6 +471,7 @@ http.createServer(function (req, res) {
     }
     else if (q.pathname == "/reset")
     {
+      reopen();
       sys_sw_state_restart();
       res.writeHead(200);
       return res.end();
@@ -626,6 +644,7 @@ function sys_run()
     led_set(LEDA,COLOR_GREEN,COLOR_OFF,1000,1000);
     led_set(LEDB,COLOR_GREEN,COLOR_OFF,1000,1000);
     led_set(LEDC,COLOR_GREEN,COLOR_OFF,1000,1000);
+    sys_weapons_on = false;
   }
   else if (sys_state === SYS_STATE_DEMO)
   {
