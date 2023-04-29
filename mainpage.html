@@ -132,7 +132,8 @@ function getValue(){
 	xh.onreadystatechange = function(){
 		if (xh.readyState === XMLHttpRequest.DONE && xh.status === 200){
       SYSTEM_DATA = JSON.parse(xh.responseText);
-      document.getElementById("TIME").innerHTML = ((SYSTEM_DATA.MIN < 10) ? ("0" + SYSTEM_DATA.MIN.toString()) : SYSTEM_DATA.MIN.toString()) + ":" + ((SYSTEM_DATA.SEC < 10) ? ("0" + SYSTEM_DATA.SEC.toString()) : SYSTEM_DATA.SEC.toString());
+      var tim = document.getElementById("TIME");
+      tim.innerHTML = ((SYSTEM_DATA.MIN < 10) ? ("0" + SYSTEM_DATA.MIN.toString()) : SYSTEM_DATA.MIN.toString()) + ":" + ((SYSTEM_DATA.SEC < 10) ? ("0" + SYSTEM_DATA.SEC.toString()) : SYSTEM_DATA.SEC.toString());
       var cA = document.getElementById("COMPA");
       cA.innerHTML = SYSTEM_DATA.COMPA.toString();
       var cB = document.getElementById("COMPB");
@@ -146,8 +147,15 @@ function getValue(){
       var hA = document.getElementById("HA");
       var hB = document.getElementById("HB");
 
+      var sT = document.getElementById("STAGE");
+
+      if (SYSTEM_DATA.PAUS)
+      {
+      }
+
       if (SYSTEM_DATA.SYS == SYS_STATE_ARRIVAL)
       {
+        sT.innerHTML = "ATVYKIMAS / ARRIVAL";
         if (SYSTEM_DATA.ARVA)
         {
           cA.style.backgroundColor ="#00FF7F";
@@ -179,6 +187,7 @@ function getValue(){
       }
       else if (SYSTEM_DATA.SYS == SYS_STATE_PREP)
       {
+        sT.innerHTML = "PASIRUOSIMAS / PREPARATION";
         if (SYSTEM_DATA.RDYA)
         {
           cA.style.backgroundColor ="#00FF7F";
@@ -210,6 +219,7 @@ function getValue(){
       }
       else if (SYSTEM_DATA.SYS == SYS_STATE_MATCH)
       {
+        sT.innerHTML = "KOVA / FIGHT";
         if (SYSTEM_DATA.TIMA)
         {
           cA.style.backgroundColor ="#FF0000";
@@ -241,6 +251,7 @@ function getValue(){
       }
       else
       {
+        sT.innerHTML = " / ";
         cA.style.backgroundColor ="#2196F3";
         cB.style.backgroundColor ="#2196F3";
         pA.style.backgroundColor ="#2196F3";
@@ -333,9 +344,10 @@ getValue();
 <body>
 <div>
 <center>
-<p style = "font-size: 80px;"> </p>
+<p style = "font-size: 60px;"> </p>
+<button id = "STAGE" tyle = "font-size: 80px; font-family: 'Lucida Console', 'Courier New', monospace; text-align: center;">PASIRUOSIMAS / PREPARATION</button>
 <div>
-<button id = "TIME" onclick="postf('timbutton')" style = "font-size: 400px; font-family: 'Lucida Console', 'Courier New', monospace; text-align: center; letter-spacing: 10px;">00:00</button>
+<button id = "TIME" onclick="timbutton()" style = "font-size: 400px; font-family: 'Lucida Console', 'Courier New', monospace; text-align: center; letter-spacing: 10px;">00:00</button>
 </div>
 <div>
 </div>
