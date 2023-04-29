@@ -32,7 +32,11 @@ const port = new SerialPort({
 function open () {
   port.open(function (err) {
     if (!err)
+    {
+      setTimeout(sys_start, 5000);
       return;
+    }
+      
     setTimeout(open, 5000); // next attempt to open after 10s
   });
 }
@@ -151,7 +155,7 @@ const SYS_STATE_DEMO = 6;
 const SYS_STATE_RESULTS = 7;
 var sys_state = SYS_STATE_INIT;
 var sys_next_state = SYS_STATE_INIT;
-setTimeout(sys_start, 5000);
+setTimeout(reopen, 5000);
 
 const api_user = "gustas23";
 //MindaugasMikalauskas
@@ -730,7 +734,6 @@ function sys_sw_state_restart()
   sys_next_state = SYS_STATE_INIT;
   sys_start_state = SYS_START_NO;
   reopen();
-  setTimeout(sys_start, 5000);
 }
 
 function sys_end()
