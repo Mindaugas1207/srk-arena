@@ -163,17 +163,17 @@ var ledOnClr = [COLOR_OFF, COLOR_OFF, COLOR_OFF];
 var ledOffClr = [COLOR_OFF, COLOR_OFF, COLOR_OFF];
 var ledBlinkPeriod_on = [0, 0, 0];
 var ledBlinkPeriod_off = [0, 0, 0];
-var ledFail = false;
+var ledFail = [false, false, false];
 
 function led_set(ledN, clrOn, clrOff, BlinkPeriod_on, BlinkPeriod_off) {
 
-  if (ledOnClr[ledN] == clrOn && ledOffClr[ledN] == clrOff && ledBlinkPeriod_on[ledN] == BlinkPeriod_on && ledBlinkPeriod_off[ledN] == BlinkPeriod_off && !ledFail)
+  if (ledOnClr[ledN] == clrOn && ledOffClr[ledN] == clrOff && ledBlinkPeriod_on[ledN] == BlinkPeriod_on && ledBlinkPeriod_off[ledN] == BlinkPeriod_off && !ledFail[ledN])
     return;
   ledOnClr[ledN] = clrOn;
   ledOffClr[ledN] = clrOff;
   ledBlinkPeriod_on[ledN] = BlinkPeriod_on;
   ledBlinkPeriod_off[ledN] = BlinkPeriod_off;
-  ledFail = false;
+  ledFail[ledN] = false;
   var str = "SET:LED" + (ledN + 1).toString() + "(" + clrOn + ";" + clrOff + ";" + BlinkPeriod_on.toString() + ';' + BlinkPeriod_off.toString() + ")\n";
   sprint(str);
 }
@@ -223,7 +223,9 @@ port.on('readable', function () {
   }
   else
   {
-    ledFail = true;
+    ledFail[LEDA] = true;
+    ledFail[LEDB] = true;
+    ledFail[LEDC] = true;
     console.log('Data:', newData)
   }
 })
