@@ -68,6 +68,30 @@
 </style>
 <script>
 
+var docelm = document.documentElement;
+
+/* View in fullscreen */
+function openFullscreen() {
+  if (docelm.requestFullscreen) {
+    docelm.requestFullscreen();
+  } else if (docelm.webkitRequestFullscreen) { /* Safari */
+    docelm.webkitRequestFullscreen();
+  } else if (docelm.msRequestFullscreen) { /* IE11 */
+    docelm.msRequestFullscreen();
+  }
+}
+
+/* Close fullscreen */
+function closeFullscreen() {
+  if (document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if (document.webkitExitFullscreen) { /* Safari */
+    document.webkitExitFullscreen();
+  } else if (document.msExitFullscreen) { /* IE11 */
+    document.msExitFullscreen();
+  }
+}
+
 const SYS_STATE_INIT = 0;
 const SYS_STATE_START = 1;
 const SYS_STATE_ARRIVAL = 2;
@@ -369,6 +393,11 @@ getValue();
 <button onclick="postf('weapons')" style = "font-size: 20px;">WEAPONS</button>
 <button onclick="postf('exit')" style = "font-size: 20px;">EXIT</button>
 <button onclick="postf('resetMatches')" style = "font-size: 20px;">RESET MATCHES</button>
+<div>
+  <button onclick="openFullscreen()" style = "font-size: 20px;">FS</button>
+  <button onclick="closeFullscreen()" style = "font-size: 20px;">NFS</button>
+</div>
+
 
 </body>
 </html>
