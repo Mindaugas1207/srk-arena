@@ -113,8 +113,10 @@ function getValue(){
       cA.innerHTML = SYSTEM_DATA.COMPA.toString();
       var cB = document.getElementById("COMPB");
       cB.innerHTML = SYSTEM_DATA.COMPB.toString();
-      document.getElementById("PNTA").innerHTML = SYSTEM_DATA.PNTA.toString();
-      document.getElementById("PNTB").innerHTML = SYSTEM_DATA.PNTB.toString();
+      var pA = document.getElementById("PNTA");
+      pA.innerHTML = SYSTEM_DATA.PNTA.toString();
+      var pB = document.getElementById("PNTB");
+      pB.innerHTML = SYSTEM_DATA.PNTB.toString();
       document.getElementById("SYS_STATE").innerHTML = SYSTEM_DATA.SYS.toString();
 
       var hA = document.getElementById("HA");
@@ -126,24 +128,28 @@ function getValue(){
         {
           cA.style.backgroundColor ="#00FF7F";
           hA.style.backgroundColor ="#00FF7F";
+          pA.style.backgroundColor ="#00FF7F";
           hA.innerHTML = "ATVYKO / ARRIVED";
         }
         else
         {
           cA.style.backgroundColor ="#FF0000";
           hA.style.backgroundColor ="#FF0000";
+          pA.style.backgroundColor ="#FF0000";
           hA.innerHTML = "NE ATVYKO / NOT ARRIVED";
         }
         if (SYSTEM_DATA.ARVB)
         {
           cB.style.backgroundColor ="#00FF7F";
           hB.style.backgroundColor ="#00FF7F";
+          pB.style.backgroundColor ="#00FF7F";
           hB.innerHTML = "ATVYKO / ARRIVED";
         }
         else
         {
           cB.style.backgroundColor ="#FF0000";
           hB.style.backgroundColor ="#FF0000";
+          pB.style.backgroundColor ="#FF0000";
           hB.innerHTML = "NE ATVYKO / NOT ARRIVED";
         }
       }
@@ -153,25 +159,29 @@ function getValue(){
         {
           cA.style.backgroundColor ="#00FF7F";
           hA.style.backgroundColor ="#00FF7F";
-          hA.innerHTML = "PASIRUOŠĘS / READY";
+          pA.style.backgroundColor ="#00FF7F";
+          hA.innerHTML = "PASIRUOSES / READY";
         }
         else
         {
           cA.style.backgroundColor ="#FF0000";
           hA.style.backgroundColor ="#FF0000";
-          hA.innerHTML = "NE PASIRUOŠĘS / NOT READY";
+          pA.style.backgroundColor ="#FF0000";
+          hA.innerHTML = "NE PASIRUOSES / NOT READY";
         }
         if (SYSTEM_DATA.RDYB)
         {
           cB.style.backgroundColor ="#00FF7F";
           hB.style.backgroundColor ="#00FF7F";
-          hB.innerHTML = "PASIRUOŠĘS / READY";
+          pB.style.backgroundColor ="#00FF7F";
+          hB.innerHTML = "PASIRUOSES / READY";
         }
         else
         {
           cB.style.backgroundColor ="#FF0000";
           hB.style.backgroundColor ="#FF0000";
-          hB.innerHTML = "NE PASIRUOŠĘS / NOT READY";
+          pB.style.backgroundColor ="#FF0000";
+          hB.innerHTML = "NE PASIRUOSES / NOT READY";
         }
       }
       else if (SYSTEM_DATA.SYS == SYS_STATE_MATCH)
@@ -180,24 +190,28 @@ function getValue(){
         {
           cA.style.backgroundColor ="#FF0000";
           hA.style.backgroundColor ="#FF0000";
+          pA.style.backgroundColor ="#FF0000";
           hA.innerHTML = "NE JUDA / NOT ACTIVE : " + SYSTEM_DATA.SECA.toString()+"s";
         }
         else
         {
           cA.style.backgroundColor ="#2196F3";
           hA.style.backgroundColor ="#2196F3";
+          pA.style.backgroundColor ="#2196F3";
           hA.innerHTML = "JUDA / ACTIVE";
         }
         if (SYSTEM_DATA.TIMB)
         {
           cB.style.backgroundColor ="#FF0000";
           hB.style.backgroundColor ="#FF0000";
-          hB.innerHTML = "NE JUDA / NOT ACTIVE : " + SYSTEM_DATA.SECA.toString()+"s";
+          pB.style.backgroundColor ="#FF0000";
+          hB.innerHTML = "NE JUDA / NOT ACTIVE : " + SYSTEM_DATA.SECB.toString()+"s";
         }
         else
         {
           cB.style.backgroundColor ="#2196F3";
           hB.style.backgroundColor ="#2196F3";
+          pB.style.backgroundColor ="#2196F3";
           hB.innerHTML = "JUDA / ACTIVE";
         }
       }
@@ -205,6 +219,8 @@ function getValue(){
       {
         cA.style.backgroundColor ="#2196F3";
         cB.style.backgroundColor ="#2196F3";
+        pA.style.backgroundColor ="#2196F3";
+        pB.style.backgroundColor ="#2196F3";
         hA.style.backgroundColor ="#2196F3";
         hA.innerHTML = "";
         hB.style.backgroundColor ="#2196F3";
