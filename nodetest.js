@@ -471,7 +471,6 @@ http.createServer(function (req, res) {
     }
     else if (q.pathname == "/reset")
     {
-      reopen();
       sys_sw_state_restart();
       res.writeHead(200);
       return res.end();
@@ -727,23 +726,11 @@ function sys_sw_state(st)
 
 function sys_sw_state_restart()
 {
-
-  
-
-  if (sys_state === SYS_STATE_ARRIVAL)
-  {
-    arrival_start();
-  }
-  else if (sys_state === SYS_STATE_PREP)
-  {
-    prep_start();
-  }
-  else if (sys_state === SYS_STATE_MATCH)
-  {
-    match_start();
-  }
-  sys_next_state = sys_state;
-  sys_weapons_on = false;
+  sys_state = SYS_STATE_INIT;
+  sys_next_state = SYS_STATE_INIT;
+  sys_start_state = SYS_START_NO;
+  reopen();
+  setTimeout(sys_start, 5000);
 }
 
 function sys_end()
