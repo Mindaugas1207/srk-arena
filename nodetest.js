@@ -718,6 +718,8 @@ function arrival_start()
 {
   start_time(ARRIVAL_TIME * 60000);
   sys_arrival_state = SYS_ARRIVAL_START;
+  sys_compA_arrived = true;
+  sys_compB_arrived = true;
   led_set(LEDA,COLOR_YELLOW,COLOR_YELLOW,0,0);
   led_set(LEDB,COLOR_YELLOW,COLOR_YELLOW,0,0);
   led_set(LEDC,COLOR_YELLOW,COLOR_YELLOW,0,0);
@@ -843,6 +845,8 @@ function prep_start()
   {
     sys_round_num = sys_round_num + 1;
   }
+  sys_compA_ready = false;
+  sys_compB_ready = false;
   led_set(LEDA,COLOR_YELLOW,COLOR_YELLOW,0,0);
   led_set(LEDB,COLOR_YELLOW,COLOR_YELLOW,0,0);
   led_set(LEDC,COLOR_YELLOW,COLOR_YELLOW,0,0);
