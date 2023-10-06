@@ -1192,8 +1192,8 @@ function api_getMatches(){
         api_participantA_ok = true;
         sys_compB_name = "B";
         api_participantB_ok = true;
-        //api_getParticipantA(api_next_match);
-        //api_getParticipantB(api_next_match);
+        api_getParticipantA(api_next_match);
+        api_getParticipantB(api_next_match);
       }
       else
       {
