@@ -162,7 +162,7 @@ const api_user = "MindaugasMikalauskas"
 //const api_key = "cEYGHeAArMEVQfuWaHUgKKF4UiqEjg3i0NIN4St3";
 const api_key = "TPl7VTI23iBck2iOaiBSBCU7YRDpYWXl6Ksm1tBa"
 //const api_tournament = "7dywihz9";
-const api_tournament = testtrn
+const api_tournament = "testtrn";
 
 var api_matches = [];
 var api_matches_ok = false;
