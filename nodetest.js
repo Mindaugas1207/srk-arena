@@ -159,10 +159,10 @@ setTimeout(reopen, 5000);
 
 //const api_user = "gustas23";
 const api_user = "MindaugasMikalauskas"
-//const api_key = "cEYGHeAArMEVQfuWaHUgKKF4UiqEjg3i0NIN4St3";
-const api_key = "TPl7VTI23iBck2iOaiBSBCU7YRDpYWXl6Ksm1tBa"
+const api_key = "cEYGHeAArMEVQfuWaHUgKKF4UiqEjg3i0NIN4St3";
+//const api_key = "TPl7VTI23iBck2iOaiBSBCU7YRDpYWXl6Ksm1tBa"
 //const api_tournament = "7dywihz9";
-const api_tournament = "testtrn";
+const api_tournament = "Robomūšis 2023 Antweight";
 
 var api_matches = [];
 var api_matches_ok = false;
@@ -1189,9 +1189,9 @@ function api_getMatches(){
 
         api_setMatchActive(api_next_match);
         sys_compA_name = "A";
-        api_participantA_ok = true;
+        api_participantA_ok = false;
         sys_compB_name = "B";
-        api_participantB_ok = true;
+        api_participantB_ok = false;
         api_getParticipantA(api_next_match);
         api_getParticipantB(api_next_match);
       }
