@@ -97,7 +97,7 @@ var sys_left_sw = false;
 var sys_right_door_open = false;
 var sys_left_door_open = false;
 
-const ARRIVAL_TIME = 5; //min
+const ARRIVAL_TIME = 1; //min
 const ARRIVAL_WARN_TIME = 10; //s
 const ARRIVAL_WARN_PRD = 2; //s
 const SYS_ARRIVAL_NO = 0;
@@ -108,7 +108,7 @@ var sys_arrival_compA = false;
 var sys_arrival_compB = false;
 var sys_arrival_interval;
 
-const PREP_TIME = 2; //min
+const PREP_TIME = 1; //min
 const PREP_WARN_TIME = 10; //s
 const PREP_WARN_PRD = 2; //s
 const SYS_PREP_NO = 0;
@@ -119,10 +119,10 @@ var sys_prep_compA = false;
 var sys_prep_compB = false;
 var sys_prep_interval;
 
-const MATCH_TIME = 2; //min
-const MATCH_START_TIME = 10; //s
+const MATCH_TIME = 3; //min
+const MATCH_START_TIME = 5; //s
 const MATCH_INACTIVE_TIME = 10; //s
-const MATCH_WEAPONS_TIME = (MATCH_TIME - 1) * 60; //s
+const MATCH_WEAPONS_TIME = 45; //s
 const SYS_MATCH_NO = 0;
 const SYS_MATCH_START = 1;
 const SYS_MATCH_RUN = 2;
