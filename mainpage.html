@@ -143,6 +143,8 @@ function getValue(){
       var pB = document.getElementById("PNTB");
       pB.innerHTML = SYSTEM_DATA.PNTB.toString();
       document.getElementById("SYS_STATE").innerHTML = SYSTEM_DATA.SYS.toString();
+      document.getElementById("SYS_MATCH").innerHTML = SYSTEM_DATA.MATCH.toString();
+      document.getElementById("SYS_ROUND").innerHTML = SYSTEM_DATA.ROUND.toString();
 
       var hA = document.getElementById("HA");
       var hB = document.getElementById("HB");
@@ -401,7 +403,9 @@ getValue();
 </div>
 <div></div>
 <p style = "font-size: 60px;"> </p>
-<p id = "SYS_STATE">0</p>
+<p id = "SYS_STATE">-</p>
+<p id = "SYS_MATCH">-</p>
+<p id = "SYS_ROUND">-</p>
 <button onclick="postf('demo')" style = "font-size: 20px;">DEMO</button>
 <button onclick="postf('weapons')" style = "font-size: 20px;">WEAPONS</button>
 <button onclick="postf('exit')" style = "font-size: 20px;">EXIT</button>
