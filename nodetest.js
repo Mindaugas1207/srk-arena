@@ -400,6 +400,34 @@ http.createServer(function (req, res) {
       res.writeHead(200);
       return res.end();
     }
+    else if (q.pathname == "/addM")
+    {
+      if (sys_state === SYS_STATE_IDLE)
+      {
+        sys_match_num += 1;
+        if (sys_match_num >= api_matches.length)
+        {
+          sys_match_num = 0;
+        }
+        sys_sw_state(SYS_STATE_IDLE);
+      }
+      res.writeHead(200);
+      return res.end();
+    }
+    else if (q.pathname == "/subM")
+    {
+      if (sys_state === SYS_STATE_IDLE)
+      {
+        sys_match_num -= 1;
+        if (sys_match_num <= 0)
+        {
+          sys_match_num = api_matches.length - 1;
+        }
+        sys_sw_state(SYS_STATE_IDLE);
+      }
+      res.writeHead(200);
+      return res.end();
+    }
     else if (q.pathname == "/resetMatches")
     {
       if (sys_state === SYS_STATE_IDLE)
