@@ -1217,11 +1217,11 @@ function api_getMatches(){
 
         api_setMatchActive(api_next_match);
         sys_compA_name = "A";
-        api_participantA_ok = false;
+        api_participantA_ok = true;
         sys_compB_name = "B";
-        api_participantB_ok = false;
-        api_getParticipantA(api_next_match);
-        api_getParticipantB(api_next_match);
+        api_participantB_ok = true;
+        //api_getParticipantA(api_next_match);
+        //api_getParticipantB(api_next_match);
       }
       else
       {
