@@ -157,8 +157,8 @@ var sys_state = SYS_STATE_INIT;
 var sys_next_state = SYS_STATE_INIT;
 setTimeout(reopen, 5000);
 
-//const api_user = "gustas23";
-const api_user = "MindaugasMikalauskas"
+const api_user = "gustas23";
+//const api_user = "MindaugasMikalauskas"
 const api_key = "cEYGHeAArMEVQfuWaHUgKKF4UiqEjg3i0NIN4St3";
 //const api_key = "TPl7VTI23iBck2iOaiBSBCU7YRDpYWXl6Ksm1tBa"
 //const api_tournament = "7dywihz9";
