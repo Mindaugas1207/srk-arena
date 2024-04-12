@@ -165,6 +165,7 @@ const api_key = "cEYGHeAArMEVQfuWaHUgKKF4UiqEjg3i0NIN4St3";
 const api_tournament = "zffwdtlw";
 
 var api_matches = [];
+var api_matches_len = 1000;
 var api_matches_ok = false;
 var api_match_active = false;
 var api_next_match = 0;
@@ -391,7 +392,7 @@ http.createServer(function (req, res) {
       {
         api_endMatch(sys_match_num);
         sys_match_num = sys_match_num + 1;
-        if (sys_match_num >= api_matches.length)
+        if (sys_match_num >= api_matches_len)
         {
           sys_match_num = 0;
         }
@@ -405,7 +406,7 @@ http.createServer(function (req, res) {
       if (sys_state === SYS_STATE_IDLE)
       {
         sys_match_num += 1;
-        if (sys_match_num >= api_matches.length)
+        if (sys_match_num >= api_matches_len)
         {
           sys_match_num = 0;
         }
@@ -421,7 +422,7 @@ http.createServer(function (req, res) {
         sys_match_num -= 1;
         if (sys_match_num <= 0)
         {
-          sys_match_num = api_matches.length - 1;
+          sys_match_num = api_matches_len - 1;
         }
         sys_sw_state(SYS_STATE_IDLE);
       }
@@ -1195,143 +1196,153 @@ function input_update_states()
 }
 
 function api_getMatches(){
-  https.get('https://'+api_user+':'+api_key+'@api.challonge.com/v1/tournaments/'+api_tournament+'/matches.json', res => {
-    let data = [];
-    console.log('Get Matches code: ', res.statusCode);
+  // https.get('https://'+api_user+':'+api_key+'@api.challonge.com/v1/tournaments/'+api_tournament+'/matches.json', res => {
+  //   let data = [];
+  //   console.log('Get Matches code: ', res.statusCode);
   
-    res.on('data', chunk => {
-      data.push(chunk);
-    });
+  //   res.on('data', chunk => {
+  //     data.push(chunk);
+  //   });
   
-    res.on('end', () => {
-      api_matches = JSON.parse(Buffer.concat(data).toString());
-      api_matches_ok = true;
-      console.log('Get Matches: ', api_matches);
-      if (api_matches.length >= api_next_match + 1)
-      {
-        if (api_next_match != api_current_match)
-        {
-          api_match_active = false;
-          api_setMatchInactive(api_current_match);
-        }
+  //   res.on('end', () => {
+  //     api_matches = JSON.parse(Buffer.concat(data).toString());
+  //     api_matches_ok = true;
+  //     console.log('Get Matches: ', api_matches);
+  //     if (api_matches.length >= api_next_match + 1)
+  //     {
+  //       if (api_next_match != api_current_match)
+  //       {
+  //         api_match_active = false;
+  //         api_setMatchInactive(api_current_match);
+  //       }
 
-        api_setMatchActive(api_next_match);
-        sys_compA_name = "A";
-        api_participantA_ok = true;
-        sys_compB_name = "B";
-        api_participantB_ok = true;
-        //api_getParticipantA(api_next_match);
-        //api_getParticipantB(api_next_match);
-      }
-      else
-      {
-        sys_compA_name = "ERR";
-        sys_compB_name = "ERR";
-      }
+  //       api_setMatchActive(api_next_match);
+  //       sys_compA_name = "A";
+  //       api_participantA_ok = true;
+  //       sys_compB_name = "B";
+  //       api_participantB_ok = true;
+  //       //api_getParticipantA(api_next_match);
+  //       //api_getParticipantB(api_next_match);
+  //     }
+  //     else
+  //     {
+  //       sys_compA_name = "ERR";
+  //       sys_compB_name = "ERR";
+  //     }
       
-    });
-  }).on('error', err => {
-    console.log('Get Matches Error: ', err.message);
-  });
+  //   });
+  // }).on('error', err => {
+  //   console.log('Get Matches Error: ', err.message);
+  // });
+  api_matches_ok = true;
+  api_match_active = false;
+  api_setMatchActive(api_next_match);
+  sys_compA_name = "A";
+  api_participantA_ok = true;
+  sys_compB_name = "B";
+  api_participantB_ok = true;
 }
 
 function api_getParticipantA(match_num){
-  https.get('https://'+api_user+':'+api_key+'@api.challonge.com/v1/tournaments/'+api_tournament+'/participants/'+api_matches[match_num].match.player1_id+'.json', res => {
-    let data = [];
-    console.log('Get PartA code: ', res.statusCode);
+  // https.get('https://'+api_user+':'+api_key+'@api.challonge.com/v1/tournaments/'+api_tournament+'/participants/'+api_matches[match_num].match.player1_id+'.json', res => {
+  //   let data = [];
+  //   console.log('Get PartA code: ', res.statusCode);
   
-    res.on('data', chunk => {
-      data.push(chunk);
-    });
+  //   res.on('data', chunk => {
+  //     data.push(chunk);
+  //   });
   
-    res.on('end', () => {
-      res = JSON.parse(Buffer.concat(data).toString());
-      console.log('Get PartA: ', res);
-      sys_compA_name = res.participant.name;
-      api_participantA_ok = true;
-    });
-  }).on('error', err => {
-    console.log('Get PartA Error: ', err.message);
-  });
+  //   res.on('end', () => {
+  //     res = JSON.parse(Buffer.concat(data).toString());
+  //     console.log('Get PartA: ', res);
+  //     sys_compA_name = res.participant.name;
+  //     api_participantA_ok = true;
+  //   });
+  // }).on('error', err => {
+  //   console.log('Get PartA Error: ', err.message);
+  // });
 }
 
 function api_getParticipantB(match_num){
-  https.get('https://'+api_user+':'+api_key+'@api.challonge.com/v1/tournaments/'+api_tournament+'/participants/'+api_matches[match_num].match.player2_id+'.json', res => {
-    let data = [];
-    console.log('Get PartB code: ', res.statusCode);
+  // https.get('https://'+api_user+':'+api_key+'@api.challonge.com/v1/tournaments/'+api_tournament+'/participants/'+api_matches[match_num].match.player2_id+'.json', res => {
+  //   let data = [];
+  //   console.log('Get PartB code: ', res.statusCode);
   
-    res.on('data', chunk => {
-      data.push(chunk);
-    });
+  //   res.on('data', chunk => {
+  //     data.push(chunk);
+  //   });
   
-    res.on('end', () => {
-      res = JSON.parse(Buffer.concat(data).toString());
-      console.log('Get PartB: ', res);
-      sys_compB_name = res.participant.name;
-      api_participantB_ok = true;
-    });
-  }).on('error', err => {
-    console.log('Get PartB Error: ', err.message);
-  });
+  //   res.on('end', () => {
+  //     res = JSON.parse(Buffer.concat(data).toString());
+  //     console.log('Get PartB: ', res);
+  //     sys_compB_name = res.participant.name;
+  //     api_participantB_ok = true;
+  //   });
+  // }).on('error', err => {
+  //   console.log('Get PartB Error: ', err.message);
+  // });
 }
 
 function api_setMatchInactive(match_num){
-  var postData = JSON.stringify({
-  });
+  // var postData = JSON.stringify({
+  // });
 
-  var options = {
-    hostname: 'api.challonge.com',
-    port: 443,
-    path: '/v1/tournaments/'+api_tournament+'/matches/'+api_matches[match_num].match.id+'/unmark_as_underway.json',
-    auth: api_user+':'+api_key,
-    method: 'POST',
-  };
+  // var options = {
+  //   hostname: 'api.challonge.com',
+  //   port: 443,
+  //   path: '/v1/tournaments/'+api_tournament+'/matches/'+api_matches[match_num].match.id+'/unmark_as_underway.json',
+  //   auth: api_user+':'+api_key,
+  //   method: 'POST',
+  // };
 
-  var req = https.request(options, (res) => {
-    console.log('Set Inactive code:', res.statusCode);
-  });
+  // var req = https.request(options, (res) => {
+  //   console.log('Set Inactive code:', res.statusCode);
+  // });
 
-  req.on('error', (e) => {
-    console.error(e);
-  });
+  // req.on('error', (e) => {
+  //   console.error(e);
+  // });
 
-  req.write(postData);
-  req.end();
+  // req.write(postData);
+  // req.end();
 }
 
 function api_setMatchActive(match_num){
-  var postData = JSON.stringify({
-  });
+  // var postData = JSON.stringify({
+  // });
 
-  var options = {
-    hostname: 'api.challonge.com',
-    port: 443,
-    path: '/v1/tournaments/'+api_tournament+'/matches/'+api_matches[match_num].match.id+'/mark_as_underway.json',
-    auth: api_user+':'+api_key,
-    method: 'POST',
-  };
+  // var options = {
+  //   hostname: 'api.challonge.com',
+  //   port: 443,
+  //   path: '/v1/tournaments/'+api_tournament+'/matches/'+api_matches[match_num].match.id+'/mark_as_underway.json',
+  //   auth: api_user+':'+api_key,
+  //   method: 'POST',
+  // };
 
-  var req = https.request(options, (res) => {
-    console.log('Set Active code:', res.statusCode);
+  // var req = https.request(options, (res) => {
+  //   console.log('Set Active code:', res.statusCode);
 
-    res.on('end', () => {
-      api_match_active = true;
-      api_current_match = api_next_match;
-    });
-  });
+  //   res.on('end', () => {
+  //     api_match_active = true;
+  //     api_current_match = api_next_match;
+  //   });
+  // });
 
-  req.on('error', (e) => {
-    console.error(e);
-  });
+  // req.on('error', (e) => {
+  //   console.error(e);
+  // });
 
-  req.write(postData);
-  req.end();
+  // req.write(postData);
+  // req.end();
+
+  api_match_active = true;
+  api_current_match = api_next_match;
 }
 
 function api_startMatch(match_num)
 {
   api_next_match = match_num;
-  api_getMatches();
+ // api_getMatches();
 }
 
 function api_endMatch(match_num)
