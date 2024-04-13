@@ -119,7 +119,7 @@ var sys_prep_compA = false;
 var sys_prep_compB = false;
 var sys_prep_interval;
 
-const MATCH_TIME = 3; //min
+const MATCH_TIME = 2; //min
 const MATCH_START_TIME = 5; //s
 const MATCH_INACTIVE_TIME = 10; //s
 const MATCH_WEAPONS_TIME = 45; //s
