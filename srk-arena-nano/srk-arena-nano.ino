@@ -39,6 +39,8 @@ unsigned long t_led1_now = 0;
 unsigned long t_led2_now = 0;
 unsigned long t_led3_now = 0;
 
+unsigned long t_led_now = 0;
+
 unsigned long t_led1_on_period = 0;
 unsigned long t_led2_on_period = 0;
 unsigned long t_led3_on_period = 0;
@@ -305,29 +307,37 @@ void doLeds()
 {
   unsigned long t_now = millis();
 
+  if (t_now - t_led_now >= 10000)
+  {
+    t_led_now = t_now;
+    t_led1_now = t_led_now;
+    t_led2_now = t_led_now;
+    t_led3_now = t_led_now;
+  }
+
   if (t_led1_on_period == 0 || t_led1_off_period == 0)
   {
     C1 = C1_off;
-    t_led1_now = t_now;
+    t_led1_now = t_led_now;
   }
   else
   {
     if (led1_state)
     {
-      if (t_now - t_led1_now > t_led1_on_period)
+      if (t_now - t_led_now >= t_led1_on_period)
       {
         C1 = C1_off;
         led1_state = false;
-        t_led1_now = t_now;
+        t_led1_now = t_led_now + t_led1_on_period;
       }
     }
     else
     {
-      if (t_now - t_led1_now > t_led1_off_period)
+      if (t_now - t_led_now >= t_led1_off_period)
       {
         C1 = C1_on;
         led1_state = true;
-        t_led1_now = t_now;
+        t_led1_now = t_led_now + t_led1_off_period;
       }
     }
   }
@@ -335,26 +345,26 @@ void doLeds()
   if (t_led2_on_period == 0 || t_led2_off_period == 0)
   {
     C2 = C2_off;
-    t_led2_now = t_now;
+    t_led2_now = t_led_now;
   }
   else
   {
     if (led2_state)
     {
-      if (t_now - t_led2_now > t_led2_on_period)
+      if (t_now - t_led_now >= t_led2_on_period)
       {
         C2 = C2_off;
         led2_state = false;
-        t_led2_now = t_now;
+        t_led2_now = t_led_now + t_led2_on_period;
       }
     }
     else
     {
-      if (t_now - t_led2_now > t_led2_off_period)
+      if (t_now - t_led_now >= t_led2_off_period)
       {
         C2 = C2_on;
         led2_state = true;
-        t_led2_now = t_now;
+        t_led2_now = t_led_now + t_led2_off_period;
       }
     }
   }
@@ -362,26 +372,26 @@ void doLeds()
   if (t_led3_on_period == 0 || t_led3_off_period == 0)
   {
     C3 = C3_off;
-    t_led3_now = t_now;
+    t_led3_now = t_led_now;
   }
   else
   {
     if (led3_state)
     {
-      if (t_now - t_led3_now > t_led3_on_period)
+      if (t_now - t_led_now >= t_led3_on_period)
       {
         C3 = C3_off;
         led3_state = false;
-        t_led3_now = t_now;
+        t_led3_now = t_led_now + t_led3_on_period;
       }
     }
     else
     {
-      if (t_now - t_led3_now > t_led3_off_period)
+      if (t_now - t_led_now >= t_led3_off_period)
       {
         C3 = C3_on;
         led3_state = true;
-        t_led3_now = t_now;
+        t_led3_now = t_led_now + t_led3_off_period;
       }
     }
   }
