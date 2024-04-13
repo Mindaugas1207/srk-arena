@@ -357,27 +357,6 @@ getValue();
 </center>
 </div>
 <div class="row">
-  <div class="column right" style='text-align:left'>
-    <button class="btn" id = "COMPA" style = "min-width: 450px;" onclick="call_buttonA()">Saldainių furgoniukas</button>
-    <div class="dropdown">
-      <button class="btn" id = "PNTA" style="border-left:1px solid #0d8bf2; min-width: 60px;">
-      0
-      </button>
-      <div class="dropdown-content">
-        <a href="#" style = "font-size: 40px;" onclick="postf('addA')">+</a>
-        <a href="#" style = "font-size: 40px;" onclick="postf('subA')">-</a>
-      </div>
-    </div>
-    <div>
-      <button class="btn" id = "HA" style = "font-size: 20px; padding: 5px; min-width: 510px; background-color: #2196F3;">NE ATVYKO / NOT ARRIVED</button>
-    </div>
-    <div>
-      <p style = "font-size: 200px;"> </p>
-      <button onclick="postf('matchEnd')" style = "font-size: 40px; min-width: 305px;">END MATCH</button>
-      <button onclick="postf('next')" style = "font-size: 40px; min-width: 200px;">NEXT</button>
-      <button onclick="postf('confirmResults')" style = "font-size: 40px;">RESULT CONFIRM</button>
-    </div>
-  </div>
   <div class="column left" style='text-align:left'>
     <button class="btn" id = "COMPB" style = "min-width: 450px;" onclick="call_buttonB()">Saldainių furgoniukas</button>
     <div class="dropdown">
@@ -398,6 +377,27 @@ getValue();
       <button onclick="postf('matchStart')" style = "font-size: 40px; min-width:305px;">START MATCH</button>
       <button onclick="postf('stop')" style = "font-size: 40px;">STOP</button>
       <button onclick="postf('cancelResults')" style = "font-size: 40px;">RESULT CANCEL</button>
+    </div>
+  </div>
+  <div class="column right" style='text-align:left'>
+    <button class="btn" id = "COMPA" style = "min-width: 450px;" onclick="call_buttonA()">Saldainių furgoniukas</button>
+    <div class="dropdown">
+      <button class="btn" id = "PNTA" style="border-left:1px solid #0d8bf2; min-width: 60px;">
+      0
+      </button>
+      <div class="dropdown-content">
+        <a href="#" style = "font-size: 40px;" onclick="postf('addA')">+</a>
+        <a href="#" style = "font-size: 40px;" onclick="postf('subA')">-</a>
+      </div>
+    </div>
+    <div>
+      <button class="btn" id = "HA" style = "font-size: 20px; padding: 5px; min-width: 510px; background-color: #2196F3;">NE ATVYKO / NOT ARRIVED</button>
+    </div>
+    <div>
+      <p style = "font-size: 200px;"> </p>
+      <button onclick="postf('matchEnd')" style = "font-size: 40px; min-width: 305px;">END MATCH</button>
+      <button onclick="postf('next')" style = "font-size: 40px; min-width: 200px;">NEXT</button>
+      <button onclick="postf('confirmResults')" style = "font-size: 40px;">RESULT CONFIRM</button>
     </div>
   </div>
 </div>
